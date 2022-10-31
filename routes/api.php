@@ -32,6 +32,8 @@ Route::get('/users/{user}', function (User $user) {
     return $user->email;
 });
 
+Route::post('v1/cell/cell/update', [CellController::class, 'cell_update']);
+
 /** Admin User routes */
 //Route::group(['middleware' => [Helper::getImplodeRoleNames([])]], static function () {
 //    /** User  routes */

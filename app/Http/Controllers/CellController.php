@@ -14,6 +14,22 @@ use Illuminate\Support\Facades\Hash;
 
 class CellController extends Controller
 {
+    public function cell_update(CellRequest $request, JSONcontroller $JSON)
+    {
+
+        try{
+            $cell = new Cell();
+            $cell->transform_cell($request);
+            $JSON->JSONsuccess("Успіх",201);
+
+        }catch (\Exception $e){
+            return $JSON->JSONerror($e->getMessage(),401);
+        }
+
+
+
+    }
+
     public function tranporate(CellRequest $request)
     {
         $c = new Cell();
