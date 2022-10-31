@@ -13,9 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('cell', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('rack');
+            $table->integer('storey');
+            $table->integer('row');
+            //$table->timestamps();
+        });
+        Schema::create('decor', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            //$table->timestamps();
         });
     }
 
