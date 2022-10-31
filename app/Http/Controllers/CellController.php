@@ -23,12 +23,15 @@ class CellController extends Controller
             } catch (\Exception) {
                 throw new \Exception('У запиті не знайшло `rack, storey або row`');
             }
-            //dd(Cell::all());
+
+           $gg = DB::select('SELECT * FROM `cell`');
+            dd($gg);
             $review = new Cell();
             $review->rack = $request->input('rack');
             $review->storey = $request->input('storey');
             $review->row = $request->input('row');
             $review->save();
+
             return $JSON->JSONsuccess('Поле успішно додано.',201);
 
 

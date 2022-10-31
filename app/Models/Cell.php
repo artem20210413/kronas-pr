@@ -11,11 +11,11 @@ class Cell extends Model
 
     public $table = 'cell';
     public $timestamps = false;
-
-    protected $cell = [
+    protected $fillable = [
         'rack',
         'story',
         'row',
-    ];
+        ];
+
 
 }
