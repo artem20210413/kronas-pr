@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/api/v1/cell',['App\Http\Controllers\CellController','set_cell']);
+Route::post('/api/v1/cell',['App\Http\Controllers\CellController','tranporate']);

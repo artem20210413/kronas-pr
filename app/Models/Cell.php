@@ -13,9 +13,25 @@ class Cell extends Model
     public $timestamps = false;
     protected $fillable = [
         'rack',
-        'story',
+        'storey',
         'row',
-        ];
+    ];
 
 
+    public function tranporate($rack = '', $storey = 66, $row = 1)
+    {
+
+        return self::where('rack', $rack)->get();
+        //return self::all();
+    }
+
+
+    protected static function boot(): void
+    {
+        parent::boot();
+        // auto-sets values on creation
+        static::creating(function ($query) {
+            $query->storey = $query->storey * 5;
+        });
+    }
 }
