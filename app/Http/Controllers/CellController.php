@@ -14,25 +14,69 @@ use Illuminate\Support\Facades\Hash;
 
 class CellController extends Controller
 {
-    public function cell_update(CellRequest $request, JSONcontroller $JSON)
+    public function CellUpdate(CellRequest $request, JSONcontroller $JSON)
     {
 
-        try{
+        try {
             $cell = new Cell();
             $cell->rack = $request->input('rack');
             $cell->storey = $request->input('storey');
             $cell->row = $request->input('row');
             $cell->save();
             //$cell->transform_cell($request);
-            return $JSON->JSONsuccess("Успіх",201);
+            return $JSON->JSONsuccess("Успіх", 201);
 
-        }catch (\Exception $e){
-            return $JSON->JSONerror($e->getMessage(),401);
+        } catch (\Exception $e) {
+            return $JSON->JSONerror($e->getMessage(), 401);
         }
 
 
-
     }
+
+    public function CellDestroy(Request $request, JSONcontroller $JSON): string
+    {
+        try {
+            try {
+                $request->validate([
+                    'rack' => 'required',
+                    'storey' => 'required',
+                    'row' => 'required'
+                ]);
+            } catch (\Exception) {
+                throw new \Exception('У запиті не знайшло `rack, storey або row`');
+            }
+            /*видаляємо масив елементів*/
+            $res = Cell::destroy($request->get('ids'));
+            return $JSON->JSONsuccess('Cells deleted!' . $res . ' el', 200);
+        } catch (\Exception $e) {
+            return $JSON->JSONerror($e->getMessage(), 400);
+        }
+    }
+
+    public function CellGet(Request $request, JSONcontroller $JSON)
+    {
+        try {
+            $Cell = new Cell();
+            try {
+                $request->validate([
+                    'rack' => 'required'
+                ]);
+            } catch (\Exception) {
+                return $JSON->JSONsuccessArray('Get  all', 'Cell', $Cell::all(), 200);
+            }
+
+            /*виводимо з бази по фільтру*/
+            return $JSON->JSONsuccessArray(
+                'Get rack by `' . $request->input('rack') . '`',
+                'Cell',
+                $Cell::where('rack', $request->input('rack'))->get(),
+                200);
+
+        } catch (\Exception $e) {
+            return $JSON->JSONerror($e->getMessage(), 400);
+        }
+    }
+
 
     public function tranporate(CellRequest $request)
     {
@@ -69,13 +113,6 @@ class CellController extends Controller
      * @param int $id
      * @return string
      */
-    public function destroy(Request $request): string
-    {
-
-        /*видаляємо масив елементів*/
-        $res = Cell::destroy($request->get('ids'));
-        return ('Cells deleted!' . $res . ' el');
-    }
 
 
     public function set_cell2(Request $request, JSONcontroller $JSON)

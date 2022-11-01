@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CellController;
 use App\Http\Controllers\DecorController;
+use App\Http\Controllers\TypeMaterialController;
 use App\Models\Cell;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,9 +34,17 @@ Route::get('/users/{user}', function (User $user) {
     return $user->email;
 });
 
-Route::post('v1/cell/cell/update', [CellController::class, 'cell_update']);
-Route::post('v1/cell/decor/create', [DecorController::class, 'CreateDecor']);
-Route::post('v1/cell/decor/delete', [DecorController::class, 'DeleteDecor']);
+Route::post('v1/cell/update', [CellController::class, 'CellUpdate']);
+Route::post('v1/cell/destroy', [CellController::class, 'CellDestroy']);
+Route::post('v1/cell/get', [CellController::class, 'CellGet']);
+
+Route::post('v1/decor/create', [DecorController::class, 'CreateDecor']);
+Route::post('v1/decor/get', [DecorController::class, 'DecorGet']);
+Route::post('v1/decor/destroy', [DecorController::class, 'DecorDestroy']);
+
+Route::post('v1/type-material/create', [TypeMaterialController::class, 'TypeMaterialCreate']);
+Route::post('v1/type-material/get', [TypeMaterialController::class, 'TypeMaterialGet']);
+Route::post('v1/type-material/destroy', [TypeMaterialController::class, 'TypeMaterialDestroy']);
 
 /** Admin User routes */
 //Route::group(['middleware' => [Helper::getImplodeRoleNames([])]], static function () {

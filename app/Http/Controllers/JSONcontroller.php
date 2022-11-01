@@ -24,4 +24,11 @@ class JSONcontroller extends Controller
             ]
         ],$status);
     }
+    public function JSONsuccessArray($Message, $NameArray, $Array, $Status){
+        return response()->json([
+            'success' => true,
+            'status' => $Message,
+            $NameArray => $Array
+        ],$Status);
+    }
 }
