@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CellController;
+use App\Http\Controllers\DecorController;
 use App\Models\Cell;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,8 @@ Route::get('/users/{user}', function (User $user) {
 });
 
 Route::post('v1/cell/cell/update', [CellController::class, 'cell_update']);
+Route::post('v1/cell/decor/create', [DecorController::class, 'CreateDecor']);
+Route::post('v1/cell/decor/delete', [DecorController::class, 'DeleteDecor']);
 
 /** Admin User routes */
 //Route::group(['middleware' => [Helper::getImplodeRoleNames([])]], static function () {

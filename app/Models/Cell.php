@@ -32,14 +32,15 @@ class Cell extends Model
         //$request->row = $request->row*5;
         /*  Создать новый элемент в таблице */
         $a = Cell::create($request->all());
-        dd($a);
+        //dd($a);
     }
     protected static function boot(): void
     {
         parent::boot();
         // auto-sets values on creation
-        static::creating(function ($query) {
+        /*изменить во всех сохранениях*/
+      /* static::creating(function ($query) {
             $query->storey = $query->storey * 5;
-        });
+        });*/
     }
 }

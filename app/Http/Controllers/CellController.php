@@ -19,8 +19,12 @@ class CellController extends Controller
 
         try{
             $cell = new Cell();
-            $cell->transform_cell($request);
-            $JSON->JSONsuccess("Успіх",201);
+            $cell->rack = $request->input('rack');
+            $cell->storey = $request->input('storey');
+            $cell->row = $request->input('row');
+            $cell->save();
+            //$cell->transform_cell($request);
+            return $JSON->JSONsuccess("Успіх",201);
 
         }catch (\Exception $e){
             return $JSON->JSONerror($e->getMessage(),401);
