@@ -6,6 +6,7 @@ use App\Http\Requests\DecorRequest;
 use App\Models\Decor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DecorController extends Controller
 {
@@ -36,9 +37,10 @@ class DecorController extends Controller
                 return $JSON->JSONsuccessArray('Get  all', 'Decor', $TM::all(), 200);
             }
 
-            $GetTM = $TM::whereLike('decor', '%' . $request->input('name') . '%');
+            $GetTM = DB::table('decor')->where('name', 'like', "%" . $request->input('name') . "%")->get() ;
+            //$GetTM = DB::select("select * from decor where name like '%" . $request->input('name') . "%'");
 
-            return $JSON->JSONsuccessArray('Get name by like `'. $request->input('name') .'`',
+            return $JSON->JSONsuccessArray('Get name by like '. $request->input('name') .'',
                 'Decor',
                 $GetTM,
                 200);
