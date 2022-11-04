@@ -10,19 +10,41 @@ use Illuminate\Support\Facades\DB;
 
 class DecorController extends Controller
 {
-    public function CreateDecor(DecorRequest $request, JSONcontroller $JSON)
+
+    public function testURL(Request $request, JSONcontroller $JSON)
+    {
+     dd(['v']);
+    }
+    public function DecorCreate(DecorRequest $request, JSONcontroller $JSON)
     {
         try {
 
-            $decor = new Decor();
-            $decor->name = $request->input('name');
-            $decor->save();
+            //$decor = new Decor();
+            //$decor->name = $request->input('name');
+            //$decor->save();
+            Decor::create($request->all());
             return $JSON->JSONsuccess('Успіх', 201);
 
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }
     }
+
+    public function DecorUpdate(DecorRequest $request, JSONcontroller $JSON)
+    {
+        try {
+            $decor = Decor::find($request->input('id'));
+            //$decor->name = $request->input('name');
+            //$decor->save();
+            //and
+            $decor->update($request->all());
+            return $JSON->JSONsuccess('Успіх', 201);
+
+        } catch (\Exception $e) {
+            return $JSON->JSONerror($e->getMessage(), 501);
+        }
+    }
+
     public function DecorGet(Request $request, JSONcontroller $JSON)
     {
 
@@ -37,10 +59,10 @@ class DecorController extends Controller
                 return $JSON->JSONsuccessArray('Get  all', 'Decor', $TM::all(), 200);
             }
 
-            $GetTM = DB::table('decor')->where('name', 'like', "%" . $request->input('name') . "%")->get() ;
+            $GetTM = DB::table('decor')->where('name', 'like', "%" . $request->input('name') . "%")->get();
             //$GetTM = DB::select("select * from decor where name like '%" . $request->input('name') . "%'");
 
-            return $JSON->JSONsuccessArray('Get name by like '. $request->input('name') .'',
+            return $JSON->JSONsuccessArray('Get name by like ' . $request->input('name') . '',
                 'Decor',
                 $GetTM,
                 200);

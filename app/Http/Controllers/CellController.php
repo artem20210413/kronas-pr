@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\URL;
 
 class CellController extends Controller
 {
@@ -83,6 +83,17 @@ class CellController extends Controller
         $c = new Cell();
         return $c->tranporate("f5v");
 //        return Cell::create($request->all());
+    }
+
+    public function testURL(Request $request)
+    {
+        // Get the current URL without the query string...
+        //echo url()->current();
+        // Get the current URL including the query string...
+        //echo url()->full();
+
+        dd( URL::current() );
+
     }
 
     public function create(CellRequest $request)
