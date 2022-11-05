@@ -7,13 +7,24 @@ use App\Models\Decor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class DecorController extends Controller
 {
 
     public function testURL(Request $request, JSONcontroller $JSON)
     {
-     dd(['v']);
+
+//        Route::get('test/&v={v}',[DecorController::class, 'testURL']);//test
+        $first = request()->segment(3);
+        $second = request()->segment(4);
+//        $param = URL::current();
+//        $username = $v = '';
+//        parse_str($param);
+        echo $request->route('v') . '_';
+        echo $request->route('g');
+//        echo $first;
+//        echo $second;
     }
     public function DecorCreate(DecorRequest $request, JSONcontroller $JSON)
     {

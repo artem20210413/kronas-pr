@@ -38,7 +38,7 @@ Route::post('v1/cell/update', [CellController::class, 'CellUpdate']);
 Route::post('v1/cell/destroy', [CellController::class, 'CellDestroy']);
 Route::post('v1/cell/get', [CellController::class, 'CellGet']);
 
-Route::get('test/&v={v}',[DecorController::class, 'testURL']);//test
+Route::get('test/{v?}/{g?}',[DecorController::class, 'testURL']);//test
 
 
 //echo route('comment.show', ['post' => 1, 'comment' => 3]);
