@@ -16,15 +16,25 @@ class DecorController extends Controller
     {
 
 //        Route::get('test/&v={v}',[DecorController::class, 'testURL']);//test
-        $first = request()->segment(3);
-        $second = request()->segment(4);
-//        $param = URL::current();
-//        $username = $v = '';
-//        parse_str($param);
-        echo $request->route('v') . '_';
-        echo $request->route('g');
-//        echo $first;
-//        echo $second;
+//        $first = request()->segment(3);
+//        $second = request()->segment(4);
+////        $param = URL::current();
+//        $part_1 = $request->route('part_1');
+//        $part_2 = $request->route('part_2');
+//        $part_1_  =explode("=", $part_1);
+//        $part_2_  =explode("=", $part_2);
+//
+//        if($part_1_[0]='name'){
+//            echo 'name = '. $part_1_[1].' / ';
+//            echo 'id = '. $part_2_[1];
+//        }else if ($part_1_[0]='id')
+//        {
+//            echo 'name = '. $part_2_[1].' / ';
+//            echo 'id = '. $part_1_[1].' / ';
+//        }
+
+        echo $this->get_URL_variable($request, 'id', 2);
+       // echo $part_1_[1] . '_' . $part_2_[1];
     }
     public function DecorCreate(DecorRequest $request, JSONcontroller $JSON)
     {
