@@ -82,39 +82,23 @@ class DecorController extends Controller
 
     public function DecorGet(Request $request, JSONcontroller $JSON)
     {
-
         try {
             $vName = $request->get('name');
-            if($vName == null){
+            if ($vName == null) {
                 $decor = new Decor(); //model
                 return $JSON->JSONsuccessArray('Get  all', 'Decor', $decor::all(), 200);
-            }else{
+            } else {
                 $GetTM = DB::table('decor')->where('name', 'like', "%" . $request->get('name') . "%")->get();
                 return $JSON->JSONsuccessArray('Get name by like ' . $request->input('name') . '',
-                'Decor',
-                $GetTM,
-                200);
+                    'Decor',
+                    $GetTM,
+                    200);
             }
 
-
-//
-//            try {
 //                $request->validate([
 //                    'name' => 'required'
 //                ]);
-//
-//            } catch (\Exception $e) {
-//                return $JSON->JSONsuccessArray('Get  all', 'Decor', $decor::all(), 200);
-//            }
-//
-//            $GetTM = DB::table('decor')->where('name', 'like', "%" . $request->input('name') . "%")->get();
-//            //$GetTM = DB::select("select * from decor where name like '%" . $request->input('name') . "%'");
-//
-//            return $JSON->JSONsuccessArray('Get name by like ' . $request->input('name') . '',
-//                'Decor',
-//                $GetTM,
-//                200);
-
+//                  $request->input('name') . "%")->get();
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }
@@ -123,8 +107,16 @@ class DecorController extends Controller
     public function DecorDestroy(DecorRequest $request, JSONcontroller $JSON)
     {
         try {
-            $res = Decor::destroy($request->get('ids'));
-            return $JSON->JSONsuccess('Cells deleted!' . $res . ' el', 200);
+            $vId = $request->get('id');
+            if ($vId != null) {
+
+                $res = Decor::destroy($request->get('id'));
+                if ($res != 0) {
+                    return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);
+                } else {
+                    return $JSON->JSONerror('Елемент з id=' . $vId. ' не видален, він відсутній або сталася помилка', 401);
+                }
+            } else return $JSON->JSONerror('Відсутнє обов`язкове поле `id`', 401);
 
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
