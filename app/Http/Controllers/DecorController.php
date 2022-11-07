@@ -52,13 +52,14 @@ class DecorController extends Controller
             //$decor->save();
             $vId = $request->get('id');
             $vName = $request->get('name');
-            if ($vId != null) {
-                $decor = Decor::find($vId);
-                $decor = $vName;
-                $decor->save();
 
+            if ($vId == null) {
+               $decor = new Decor();
+               $decor->name = $vName;
+               $decor->save();
+                return $JSON->JSONsuccess('Успіх', 201);
             } else if ($vName != '') {
-                $decor = new Decor();
+                $decor = Decor::find($vId);
                 $decor->update($request->all());
                 return $JSON->JSONsuccess('Успіх', 201);
             } else {
