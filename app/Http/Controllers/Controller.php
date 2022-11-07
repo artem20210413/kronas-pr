@@ -25,18 +25,7 @@ class Controller extends BaseController
 
     }
 
-    protected function get_URL_variable2(Request $request, $name_var, $size_part)
-    {
 
-        //dd($request->all());
-        for ($i = 1; $i <= $size_part; $i++) {
-            $part = explode("=", $request->route('part_' . $i));
-            if ($part[0] == $name_var) {
-                return $part[1];
-            }
-        }
-
-    }
 
 
 }

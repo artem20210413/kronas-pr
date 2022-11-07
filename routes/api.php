@@ -22,11 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-//Route::post('v1/cell',['App\Http\Controllers\CellController','set_cell']);
-//Route::get('test/ddd', function () {
-//    return 'sdfsdfdfdf';
-//});
 Route::post('v1/cell/delete', [CellController::class, 'destroy']);
 Route::put('v1/cell/update/{id}', function (Cell $cell) {
     return (new CellController)->update($cell);
@@ -35,22 +30,19 @@ Route::put('v1/cell/update/{id}', function (Cell $cell) {
 Route::get('/users/{user}', function (User $user) {
     return $user->email;
 });
-Route::post('v1/cell',['App\Http\Controllers\CellController','tranporate']);
-Route::post('v1/cell/update', [CellController::class, 'CellUpdate']);
+
+
+//Route::get('test/{part_1?}/{part_2?}',[DecorController::class, 'testURL']);//test
+
+
+
+Route::get('v1/cell', [CellController::class, 'CellGet']);
+Route::post('v1/cell', [CellController::class, 'CellUpdate']);
 Route::post('v1/cell/destroy', [CellController::class, 'CellDestroy']);
-Route::post('v1/cell/get', [CellController::class, 'CellGet']);
 
-//test pull
-Route::get('test',[DecorController::class, 'testURL2'])->whereNumber('id');//where('id','[0-9]');//test
-Route::get('test/{part_1?}/{part_2?}',[DecorController::class, 'testURL']);//test
-
-
-
-//Route::get('v1/decor/create_or_update', [DecorController::class, 'DecorCreateAndUpdate']);
-Route::post('v1/decor', [DecorController::class, 'DecorCreateAndUpdate']);
-//Route::post('v1/decor/update', [DecorController::class, 'DecorUpdate']);
 Route::get('v1/decor', [DecorController::class, 'DecorGet']);
-Route::get('v1/decor/destroy', [DecorController::class, 'DecorDestroy']);
+Route::post('v1/decor', [DecorController::class, 'DecorCreateAndUpdate']);
+Route::post('v1/decor/destroy', [DecorController::class, 'DecorDestroy']);
 
 Route::post('v1/type-material', [TypeMaterialController::class, 'TypeMaterialCreate']);
 Route::get('v1/type-material', [TypeMaterialController::class, 'TypeMaterialGet']);
