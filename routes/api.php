@@ -46,11 +46,9 @@ Route::get('test/{part_1?}/{part_2?}',[DecorController::class, 'testURL']);//tes
 
 
 
-//echo route('comment.show', ['post' => 1, 'comment' => 3]);
-//Route::post('v1/decor/create', [DecorController::class, 'DecorCreate']);
 Route::get('v1/decor/create_or_update', [DecorController::class, 'DecorCreateAndUpdate']);
 //Route::post('v1/decor/update', [DecorController::class, 'DecorUpdate']);
-Route::post('v1/decor/get', [DecorController::class, 'DecorGet']);
+Route::get('v1/decor', [DecorController::class, 'DecorGet']);
 Route::post('v1/decor/destroy', [DecorController::class, 'DecorDestroy']);
 
 Route::post('v1/type-material/create', [TypeMaterialController::class, 'TypeMaterialCreate']);

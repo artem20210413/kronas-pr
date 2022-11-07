@@ -84,23 +84,36 @@ class DecorController extends Controller
     {
 
         try {
-            $TM = new Decor(); //model
-            try {
-                $request->validate([
-                    'name' => 'required'
-                ]);
-
-            } catch (\Exception $e) {
-                return $JSON->JSONsuccessArray('Get  all', 'Decor', $TM::all(), 200);
-            }
-
-            $GetTM = DB::table('decor')->where('name', 'like', "%" . $request->input('name') . "%")->get();
-            //$GetTM = DB::select("select * from decor where name like '%" . $request->input('name') . "%'");
-
-            return $JSON->JSONsuccessArray('Get name by like ' . $request->input('name') . '',
+            $vName = $request->get('name');
+            if($vName == null){
+                $decor = new Decor(); //model
+                return $JSON->JSONsuccessArray('Get  all', 'Decor', $decor::all(), 200);
+            }else{
+                $GetTM = DB::table('decor')->where('name', 'like', "%" . $request->get('name') . "%")->get();
+                return $JSON->JSONsuccessArray('Get name by like ' . $request->input('name') . '',
                 'Decor',
                 $GetTM,
                 200);
+            }
+
+
+//
+//            try {
+//                $request->validate([
+//                    'name' => 'required'
+//                ]);
+//
+//            } catch (\Exception $e) {
+//                return $JSON->JSONsuccessArray('Get  all', 'Decor', $decor::all(), 200);
+//            }
+//
+//            $GetTM = DB::table('decor')->where('name', 'like', "%" . $request->input('name') . "%")->get();
+//            //$GetTM = DB::select("select * from decor where name like '%" . $request->input('name') . "%'");
+//
+//            return $JSON->JSONsuccessArray('Get name by like ' . $request->input('name') . '',
+//                'Decor',
+//                $GetTM,
+//                200);
 
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
