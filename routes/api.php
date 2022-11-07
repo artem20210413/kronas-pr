@@ -47,7 +47,7 @@ Route::get('test/{part_1?}/{part_2?}',[DecorController::class, 'testURL']);//tes
 
 
 //Route::get('v1/decor/create_or_update', [DecorController::class, 'DecorCreateAndUpdate']);
-Route::post('v1/decor/create_or_update', [DecorController::class, 'DecorCreateAndUpdate']);
+Route::post('v1/decor', [DecorController::class, 'DecorCreateAndUpdate']);
 //Route::post('v1/decor/update', [DecorController::class, 'DecorUpdate']);
 Route::get('v1/decor', [DecorController::class, 'DecorGet']);
 Route::get('v1/decor/destroy', [DecorController::class, 'DecorDestroy']);

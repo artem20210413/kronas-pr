@@ -56,17 +56,19 @@ class DecorController extends Controller
         try {
             $vId = $request->get('id');
             $vName = $request->get('name');
-            if ($vName == null) {
+            if ($vName == null ) {
                 return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 401);
-            } else if ($vId == null) {
+            } else if ($vId == null || $vId ==0) {
                 $decor = new Decor();
                 $decor->name = $vName;
                 $decor->save();
-                return $JSON->JSONsuccess('Успіх', 201);
+                $vNewDecor = DB::table('decor')->latest('id')->first();
+                return $JSON->JSONsuccessArray('Create','New decor' ,$vNewDecor, 201);
             } else {
                 $decor = Decor::find($vId);
                 $decor->update($request->all());
-                return $JSON->JSONsuccess('Успіх', 201);
+                $vUpdateDecor = DB::table('decor')->where('id', $vId)->get();
+                return $JSON->JSONsuccessArray('Update','Decor' ,$vUpdateDecor, 201);
             }
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);

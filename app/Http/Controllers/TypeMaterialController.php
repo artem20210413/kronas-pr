@@ -12,27 +12,29 @@ class TypeMaterialController extends Controller
 {
     public function TypeMaterialCreate(Request $request, JSONcontroller $JSON)//TypeMaterialRequest $TMR
     {
-        try {
 
+        try {
             $vId = $request->get('id');
             $vName = $request->get('name');
             if ($vName == null) {
                 return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 401);
-            } else if ($vId == null) {
+            } else if ($vId == null || $vId == 0) {
                 $decor = new TypeMaterialModel();
                 $decor->name = $vName;
                 $decor->save();
-                return $JSON->JSONsuccess('Успіх', 201);
+                $vNewDecor = DB::table('type_material')->latest('id')->first();
+                return $JSON->JSONsuccessArray('Create', 'New type material', $vNewDecor, 201);
             } else {
                 $decor = TypeMaterialModel::find($vId);
                 $decor->update($request->all());
-                return $JSON->JSONsuccess('Успіх', 201);
+                $vUpdateDecor = DB::table('type_material')->where('id', $vId)->get();
+                return $JSON->JSONsuccessArray('Update', 'Type material', $vUpdateDecor, 201);
             }
-
-
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }
+    }
+
 //        try {
 //            $TM = new TypeMaterialModel();
 //            $TM->name = $TMR->input('name');
@@ -42,7 +44,6 @@ class TypeMaterialController extends Controller
 //            return $JSON->JSONerror($e->getMessage(), 501);
 //        }
 
-    }
 
     public function TypeMaterialGet(Request $request, JSONcontroller $JSON)
     {
@@ -98,7 +99,7 @@ class TypeMaterialController extends Controller
                 if ($res != 0) {
                     return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);
                 } else {
-                    return $JSON->JSONerror('Елемент з id=' . $vId. ' не видален, він відсутній або сталася помилка', 401);
+                    return $JSON->JSONerror('Елемент з id=' . $vId . ' не видален, він відсутній або сталася помилка', 401);
                 }
             } else return $JSON->JSONerror('Відсутнє обов`язкове поле `id`', 401);
 
