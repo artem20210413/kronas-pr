@@ -43,8 +43,16 @@ class DecorController extends Controller
         dd($request->all());
     }
 
-    public function DecorCreateAndUpdate(DecorRequest $request, JSONcontroller $JSON)
+    public function DecorCreateAndUpdate(Request $request, JSONcontroller $JSON)
     {
+        //dd($request->all());
+//        if($request->method() == 'POST')
+//        {
+//            $decor = new Decor();
+//            //$decor->name = $request->input('name');
+//            $decor->seve();
+//                return $JSON->JSONsuccess('Успіх', 201);
+//        }
         try {
             $vId = $request->get('id');
             $vName = $request->get('name');

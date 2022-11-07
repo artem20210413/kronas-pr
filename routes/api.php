@@ -46,14 +46,15 @@ Route::get('test/{part_1?}/{part_2?}',[DecorController::class, 'testURL']);//tes
 
 
 
-Route::get('v1/decor/create_or_update', [DecorController::class, 'DecorCreateAndUpdate']);
+//Route::get('v1/decor/create_or_update', [DecorController::class, 'DecorCreateAndUpdate']);
+Route::post('v1/decor/create_or_update', [DecorController::class, 'DecorCreateAndUpdate']);
 //Route::post('v1/decor/update', [DecorController::class, 'DecorUpdate']);
 Route::get('v1/decor', [DecorController::class, 'DecorGet']);
 Route::get('v1/decor/destroy', [DecorController::class, 'DecorDestroy']);
 
-Route::post('v1/type-material/create', [TypeMaterialController::class, 'TypeMaterialCreate']);
-Route::post('v1/type-material/get', [TypeMaterialController::class, 'TypeMaterialGet']);
-Route::post('v1/type-material/destroy', [TypeMaterialController::class, 'TypeMaterialDestroy']);
+Route::post('v1/type-material', [TypeMaterialController::class, 'TypeMaterialCreate']);
+Route::get('v1/type-material', [TypeMaterialController::class, 'TypeMaterialGet']);
+Route::get('v1/type-material/destroy', [TypeMaterialController::class, 'TypeMaterialDestroy']);
 
 /** Admin User routes */
 //Route::group(['middleware' => [Helper::getImplodeRoleNames([])]], static function () {

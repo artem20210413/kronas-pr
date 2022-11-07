@@ -10,6 +10,9 @@ class TypeMaterialModel extends Model
     use HasFactory;
     public $table = 'type_material';
     public $timestamps = false;
-
+    protected $fillable = [
+        'id',
+        'name'
+    ];
 
 }
