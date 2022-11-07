@@ -43,32 +43,23 @@ class DecorController extends Controller
         dd($request->all());
     }
 
-    public function DecorCreate(DecorRequest $request, JSONcontroller $JSON)
+    public function DecorCreateAndUpdate(DecorRequest $request, JSONcontroller $JSON)
     {
         try {
-
-            //$decor = new Decor();
-            //$decor->name = $request->input('name');
-            //$decor->save();
             $vId = $request->get('id');
             $vName = $request->get('name');
-
-            if ($vId == null) {
-               $decor = new Decor();
-               $decor->name = $vName;
-               $decor->save();
+            if ($vName == null) {
+                return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 401);
+            } else if ($vId == null) {
+                $decor = new Decor();
+                $decor->name = $vName;
+                $decor->save();
                 return $JSON->JSONsuccess('Успіх', 201);
-            } else if ($vName != '') {
+            } else {
                 $decor = Decor::find($vId);
                 $decor->update($request->all());
                 return $JSON->JSONsuccess('Успіх', 201);
-            } else {
-                return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 401);
             }
-
-            // Decor::create($request->all());
-
-
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }
