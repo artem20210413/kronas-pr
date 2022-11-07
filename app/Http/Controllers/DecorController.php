@@ -34,8 +34,12 @@ class DecorController extends Controller
 //        }
 
         echo $this->get_URL_variable($request, 'id', 2);
-       // echo $part_1_[1] . '_' . $part_2_[1];
+        // echo $part_1_[1] . '_' . $part_2_[1];
+    } public function testURL2(Request $request, JSONcontroller $JSON)
+    {
+       dd($request->get('a'));
     }
+
     public function DecorCreate(DecorRequest $request, JSONcontroller $JSON)
     {
         try {
@@ -43,8 +47,18 @@ class DecorController extends Controller
             //$decor = new Decor();
             //$decor->name = $request->input('name');
             //$decor->save();
-            Decor::create($request->all());
-            return $JSON->JSONsuccess('Успіх', 201);
+            $vName = $this->get_URL_variable($request, 'name', 2);
+                if ($vName != '') {
+                    $decor = new Decor();
+                    $decor->name = $vName;
+                    $decor->save();
+                    return $JSON->JSONsuccess('Успіх', 201);
+                } else {
+                    return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 501);
+                }
+
+           // Decor::create($request->all());
+
 
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);

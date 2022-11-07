@@ -24,7 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 //Route::post('v1/cell',['App\Http\Controllers\CellController','set_cell']);
-
+//Route::get('test/ddd', function () {
+//    return 'sdfsdfdfdf';
+//});
 Route::post('v1/cell/delete', [CellController::class, 'destroy']);
 Route::put('v1/cell/update/{id}', function (Cell $cell) {
     return (new CellController)->update($cell);
@@ -33,16 +35,20 @@ Route::put('v1/cell/update/{id}', function (Cell $cell) {
 Route::get('/users/{user}', function (User $user) {
     return $user->email;
 });
-
+Route::post('v1/cell',['App\Http\Controllers\CellController','tranporate']);
 Route::post('v1/cell/update', [CellController::class, 'CellUpdate']);
 Route::post('v1/cell/destroy', [CellController::class, 'CellDestroy']);
 Route::post('v1/cell/get', [CellController::class, 'CellGet']);
 
+
+Route::get('test',[DecorController::class, 'testURL2'])->//test
 Route::get('test/{part_1?}/{part_2?}',[DecorController::class, 'testURL']);//test
 
 
+
 //echo route('comment.show', ['post' => 1, 'comment' => 3]);
-Route::post('v1/decor/create', [DecorController::class, 'DecorCreate']);
+//Route::post('v1/decor/create', [DecorController::class, 'DecorCreate']);
+Route::get('v1/decor/create_or_update/{part_1?}/{part_2?}', [DecorController::class, 'DecorCreate']);
 Route::post('v1/decor/update', [DecorController::class, 'DecorUpdate']);
 Route::post('v1/decor/get', [DecorController::class, 'DecorGet']);
 Route::post('v1/decor/destroy', [DecorController::class, 'DecorDestroy']);
