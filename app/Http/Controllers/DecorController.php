@@ -35,9 +35,12 @@ class DecorController extends Controller
 
         echo $this->get_URL_variable($request, 'id', 2);
         // echo $part_1_[1] . '_' . $part_2_[1];
-    } public function testURL2(Request $request, JSONcontroller $JSON)
+    }
+
+    public function testURL2(Request $request, JSONcontroller $JSON)
     {
-       dd($request->get('a'));
+//       dd($request->get('a'));
+        dd($request->all());
     }
 
     public function DecorCreate(DecorRequest $request, JSONcontroller $JSON)
@@ -47,17 +50,22 @@ class DecorController extends Controller
             //$decor = new Decor();
             //$decor->name = $request->input('name');
             //$decor->save();
-            $vName = $this->get_URL_variable($request, 'name', 2);
-                if ($vName != '') {
-                    $decor = new Decor();
-                    $decor->name = $vName;
-                    $decor->save();
-                    return $JSON->JSONsuccess('Успіх', 201);
-                } else {
-                    return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 501);
-                }
+            $vId = $request->get('id');
+            $vName = $request->get('name');
+            if ($vId != null) {
+                $decor = Decor::find($vId);
+                $decor = $vName;
+                $decor->save();
 
-           // Decor::create($request->all());
+            } else if ($vName != '') {
+                $decor = new Decor();
+                $decor->update($request->all());
+                return $JSON->JSONsuccess('Успіх', 201);
+            } else {
+                return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 401);
+            }
+
+            // Decor::create($request->all());
 
 
         } catch (\Exception $e) {

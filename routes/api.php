@@ -41,14 +41,14 @@ Route::post('v1/cell/destroy', [CellController::class, 'CellDestroy']);
 Route::post('v1/cell/get', [CellController::class, 'CellGet']);
 
 //test pull
-Route::get('test',[DecorController::class, 'testURL2'])->//test
+Route::get('test',[DecorController::class, 'testURL2'])->whereNumber('id');//where('id','[0-9]');//test
 Route::get('test/{part_1?}/{part_2?}',[DecorController::class, 'testURL']);//test
 
 
 
 //echo route('comment.show', ['post' => 1, 'comment' => 3]);
 //Route::post('v1/decor/create', [DecorController::class, 'DecorCreate']);
-Route::get('v1/decor/create_or_update/{part_1?}/{part_2?}', [DecorController::class, 'DecorCreate']);
+Route::get('v1/decor/create_or_update', [DecorController::class, 'DecorCreate']);
 Route::post('v1/decor/update', [DecorController::class, 'DecorUpdate']);
 Route::post('v1/decor/get', [DecorController::class, 'DecorGet']);
 Route::post('v1/decor/destroy', [DecorController::class, 'DecorDestroy']);
