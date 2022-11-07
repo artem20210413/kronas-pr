@@ -40,7 +40,7 @@ Route::post('v1/cell/update', [CellController::class, 'CellUpdate']);
 Route::post('v1/cell/destroy', [CellController::class, 'CellDestroy']);
 Route::post('v1/cell/get', [CellController::class, 'CellGet']);
 
-
+//test pull
 Route::get('test',[DecorController::class, 'testURL2'])->//test
 Route::get('test/{part_1?}/{part_2?}',[DecorController::class, 'testURL']);//test
 
