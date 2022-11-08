@@ -3,6 +3,7 @@
 use App\Http\Controllers\CellController;
 use App\Http\Controllers\DecorController;
 use App\Http\Controllers\TypeMaterialController;
+use App\Http\Controllers\MaterialController;
 use App\Models\Cell;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,20 +37,20 @@ Route::get('/users/{user}', function (User $user) {
 
 
 
+Route::get('v1/material', [MaterialController::class, 'MaterialGet']);
+
+
+
 Route::get('v1/cell', [CellController::class, 'CellGet']);
 Route::post('v1/cell', [CellController::class, 'CellUpdate']);
 Route::delete('v1/cell', [CellController::class, 'CellDestroy']);
 
-
-
-Route::get('v1/decor/create_or_update', [DecorController::class, 'DecorCreateAndUpdate']);
-//Route::post('v1/decor/update', [DecorController::class, 'DecorUpdate']);
 Route::get('v1/decor', [DecorController::class, 'DecorGet']);
 Route::post('v1/decor', [DecorController::class, 'DecorCreateAndUpdate']);
 Route::delete('v1/decor', [DecorController::class, 'DecorDestroy']);
 
-Route::post('v1/type-material', [TypeMaterialController::class, 'TypeMaterialCreate']);
 Route::get('v1/type-material', [TypeMaterialController::class, 'TypeMaterialGet']);
+Route::post('v1/type-material', [TypeMaterialController::class, 'TypeMaterialCreate']);
 Route::delete('v1/type-material', [TypeMaterialController::class, 'TypeMaterialDestroy']);
 
 /** Admin User routes */
