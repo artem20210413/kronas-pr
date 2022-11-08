@@ -53,13 +53,12 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('kronas_user');
             $table->unsignedBigInteger('action_material_id');
-            $table->tinyInteger('accounting');
+            $table->tinyInteger('accounting', 1);//- 1
 
             $table->foreign('action_material_id')
                 ->references('id')
                 ->on('action_material')
                 ->onDelete('cascade');
-
         });
 
         Schema::create('material', function (Blueprint $table) {
@@ -68,11 +67,11 @@ return new class extends Migration
             $table->unsignedBigInteger('type_material_id');
             $table->unsignedBigInteger('decor_id');
             $table->unsignedBigInteger('cell_id');
-            $table->integer('Length');
-            $table->integer('Width');
-            $table->integer('Thickness');
+            $table->integer('length');
+            $table->integer('width');
+            $table->integer('thickness');
             $table->timestamps();
-            $table->tinyInteger('Accounting');
+            $table->tinyInteger('accounting');
 
             /*  созадем связь   */
             $table->foreign('type_material_id')
