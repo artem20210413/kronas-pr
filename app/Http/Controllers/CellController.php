@@ -18,10 +18,14 @@ class CellController extends Controller
     {
 
         try {
-            $vId = $request->get('id');
-            $vRack = $request->get('rack');
-            $vStorey = $request->get('storey');
-            $vRow = $request->get('row');
+//            $vId = $request->get('id');
+//            $vRack = $request->get('rack');
+//            $vStorey = $request->get('storey');
+//            $vRow = $request->get('row');
+            $vId = $request->input('id');
+            $vRack = $request->input('rack');
+            $vStorey = $request->input('storey');
+            $vRow = $request->input('row');
             if ($vRack == null || $vStorey == null || $vRow == null) {
                 return $JSON->JSONerror('Нічого не передали або немає аргументів `rack`,`storey`,`row`', 401);
             }
@@ -77,6 +81,8 @@ class CellController extends Controller
         try {
             $vId = $request->get('id');
             $vRack = $request->get('rack');
+//            $vId = $request->input('id');
+//            $vRack = $request->input('rack');
 //            $cell = new Cell();
 
             if ($vId != null) {
@@ -113,8 +119,10 @@ class CellController extends Controller
     public function CellGet(Request $request, JSONcontroller $JSON)
     {
         try {
-            $vId = $request->get('id');
-            $vRack = $request->get('rack');
+//            $vId = $request->get('id');
+//            $vRack = $request->get('rack');
+            $vId = $request->input('id');
+            $vRack = $request->input('rack');
             if ($vId != null) {
                 $vCall = DB::table('cell')->where('id', $vId)->get();
                 return $JSON->JSONsuccessArray('get by id: `' . $vId.'`','Cells',$vCall, 401);
