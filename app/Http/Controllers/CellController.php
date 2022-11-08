@@ -22,10 +22,10 @@ class CellController extends Controller
 //            $vRack = $request->get('rack');
 //            $vStorey = $request->get('storey');
 //            $vRow = $request->get('row');
-            $vId = $request->input('id');
-            $vRack = $request->input('rack');
-            $vStorey = $request->input('storey');
-            $vRow = $request->input('row');
+            //$vId = $request->post('id');
+            $vRack = $request->post('rack');
+            $vStorey = $request->post('storey');
+            $vRow = $request->post('row');
             if ($vRack == null || $vStorey == null || $vRow == null) {
                 return $JSON->JSONerror('Нічого не передали або немає аргументів `rack`,`storey`,`row`', 401);
             }
@@ -54,7 +54,7 @@ class CellController extends Controller
                 }
             }
 
-            return $JSON->JSONsuccessArray('Update','New Cells',DB::table('cell')->where('rack', $vRack)->get(), 201);
+            return $JSON->JSONsuccessArray('Update', 'New Cells', DB::table('cell')->where('rack', $vRack)->get(), 201);
 
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
@@ -79,15 +79,15 @@ class CellController extends Controller
     {
 
         try {
-            $vId = $request->get('id');
-            $vRack = $request->get('rack');
-//            $vId = $request->input('id');
-//            $vRack = $request->input('rack');
+//            $vId = $request->get('id');
+//            $vRack = $request->get('rack');
+            $vId = $request->post('id');
+            $vRack = $request->post('rack');
 //            $cell = new Cell();
 
             if ($vId != null) {
                 Cell::destroy($vId);
-                return $JSON->JSONsuccess('Destroy element by id = '. $vId, 201);
+                return $JSON->JSONsuccess('Destroy element by id = ' . $vId, 201);
             } else if ($vRack != null) {
                 $vAllCell = DB::table('cell')->where('rack', $vRack)->get();
                 $count = 0;
@@ -95,7 +95,7 @@ class CellController extends Controller
                     Cell::destroy($cell->id);
                     $count++;
                 }
-                return $JSON->JSONsuccess('Destroy array by rack = '. $vRack. '. delete ' . $count .' elements.', 201);
+                return $JSON->JSONsuccess('Destroy array by rack = ' . $vRack . '. delete ' . $count . ' elements.', 201);
             } else {
                 return $JSON->JSONerror('Нічого не передали або немає аргументів `id` або `rack`', 401);
             }
@@ -119,19 +119,17 @@ class CellController extends Controller
     public function CellGet(Request $request, JSONcontroller $JSON)
     {
         try {
-//            $vId = $request->get('id');
-//            $vRack = $request->get('rack');
-            $vId = $request->input('id');
-            $vRack = $request->input('rack');
+            $vId = $request->get('id');
+            $vRack = $request->get('rack');
             if ($vId != null) {
                 $vCall = DB::table('cell')->where('id', $vId)->get();
-                return $JSON->JSONsuccessArray('get by id: `' . $vId.'`','Cells',$vCall, 401);
+                return $JSON->JSONsuccessArray('get by id: `' . $vId . '`', 'Cells', $vCall, 401);
             } else if ($vRack != null) {
                 $vCall = DB::table('cell')->where('rack', $vRack)->get();
-                return $JSON->JSONsuccessArray('get by rack: `' . $vRack.'`','Cells',$vCall, 401);
+                return $JSON->JSONsuccessArray('get by rack: `' . $vRack . '`', 'Cells', $vCall, 401);
                 ////return $JSON->JSONsuccess('Destroy array by rack = '. $vRack. '. delete ' . $count .' elements.', 201);
             } else {
-                return $JSON->JSONsuccessArray('all','Cells',Cell::all(), 401);
+                return $JSON->JSONsuccessArray('all', 'Cells', Cell::all(), 401);
             }
 //            $Cell = new Cell();
 //            try {
