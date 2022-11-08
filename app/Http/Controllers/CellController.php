@@ -49,7 +49,8 @@ class CellController extends Controller
                     }
                 }
             }
-            return $JSON->JSONsuccess('Update', 201);
+
+            return $JSON->JSONsuccessArray('Update','New Cells',DB::table('cell')->where('rack', $vRack)->get(), 201);
 
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);

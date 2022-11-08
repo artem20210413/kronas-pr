@@ -116,6 +116,7 @@ class DecorController extends Controller
 
     public function DecorDestroy(DecorRequest $request, JSONcontroller $JSON)
     {
+        dd($request);
         try {
             $vId = $request->get('id');
             if ($vId != null) {

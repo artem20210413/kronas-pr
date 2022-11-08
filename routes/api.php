@@ -38,15 +38,19 @@ Route::get('/users/{user}', function (User $user) {
 
 Route::get('v1/cell', [CellController::class, 'CellGet']);
 Route::post('v1/cell', [CellController::class, 'CellUpdate']);
-Route::post('v1/cell/destroy', [CellController::class, 'CellDestroy']);
+Route::delete('v1/cell', [CellController::class, 'CellDestroy']);
 
+
+
+Route::get('v1/decor/create_or_update', [DecorController::class, 'DecorCreateAndUpdate']);
+//Route::post('v1/decor/update', [DecorController::class, 'DecorUpdate']);
 Route::get('v1/decor', [DecorController::class, 'DecorGet']);
 Route::post('v1/decor', [DecorController::class, 'DecorCreateAndUpdate']);
-Route::post('v1/decor/destroy', [DecorController::class, 'DecorDestroy']);
+Route::delete('v1/decor', [DecorController::class, 'DecorDestroy']);
 
 Route::post('v1/type-material', [TypeMaterialController::class, 'TypeMaterialCreate']);
 Route::get('v1/type-material', [TypeMaterialController::class, 'TypeMaterialGet']);
-Route::get('v1/type-material/destroy', [TypeMaterialController::class, 'TypeMaterialDestroy']);
+Route::delete('v1/type-material', [TypeMaterialController::class, 'TypeMaterialDestroy']);
 
 /** Admin User routes */
 //Route::group(['middleware' => [Helper::getImplodeRoleNames([])]], static function () {
