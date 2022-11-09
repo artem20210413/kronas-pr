@@ -50,8 +50,11 @@ class MaterialController extends Controller
 //                    if($key)
                     //dump($req, $key);
                 }
-                dd($m->get());
-                $m = MaterialModel::where(['id' => $vId, 'vendor_code' => $vVendor_code])->get();
+                //dd($m->get());
+
+
+
+                //$m = MaterialModel::where(['id' => $vId, 'vendor_code' => $vVendor_code])->get();
                 $GetTM = DB::table('material')
                     ->where('id', 'like', "%" . $vId . "%")
                     ->where('vendor_code', 'like', "%" . $vVendor_code . "%")
@@ -66,18 +69,18 @@ class MaterialController extends Controller
                     ->where('accounting', 'like', "%" . $vAccounting . "%")
                     ->get();
 //                dd(MaterialModel::where(['id'=>1])->get());
-                dd($GetTM);
-                $m = MaterialModel::where(['id' => $vId, 'vendor_code' => $vVendor_code])->get();
-                foreach ($m as $k => $v){
-                    echo $v->decor->name;
-                }
-                dd($m->decor->name);
-                dd(MaterialModel::where(['id'=>1])->first());
-                return MaterialCollection::collection(MaterialModel::where(['id'=>1])->first());
-                return [];
+                //dd($GetTM);
+//                $m = MaterialModel::where(['id' => $vId, 'vendor_code' => $vVendor_code])->get();
+//                foreach ($m as $k => $v){
+//                    echo $v->decor->name;
+//                }
+                //dd($m->decor->name);
+                //dd(MaterialModel::where(['id'=>1])->first());
+                //return MaterialCollection::collection(MaterialModel::where(['id'=>1])->first());
+                //return [];
                 return $JSON->JSONsuccessArray('Get name by like var',
                     'Material',
-                    $GetTM,
+                    $m->get(),
                     200);
             }
         } catch (\Exception $e) {
