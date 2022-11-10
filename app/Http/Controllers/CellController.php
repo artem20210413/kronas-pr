@@ -115,6 +115,10 @@ class CellController extends Controller
             return $JSON->JSONerror($e->getMessage(), 400);
         }
     }
+    public function CellId(Cell $cell_id)
+    {
+        dd($cell_id);
+    }
 
     public function CellGet(Request $request, JSONcontroller $JSON)
     {

@@ -44,6 +44,7 @@ Route::post('v1/material', [MaterialController::class, 'MaterialPost']);
 
 
 
+//Route::get('v1/cell/{cell_id}/get', [CellController::class, 'CellId']);
 Route::get('v1/cell', [CellController::class, 'CellGet']);
 Route::post('v1/cell', [CellController::class, 'CellUpdate']);
 Route::delete('v1/cell', [CellController::class, 'CellDestroy']);

@@ -10,25 +10,28 @@ class JSONcontroller extends Controller
     /* Вывод JSON ошибки сообщение / статус*/
     public function JSONerror($message, $status){
         return response()->json([
-            'success' => false,
-            'error' => [
-                'message' => $message
-            ]
-        ], $status);
+            "code" => $status,
+            'status' => 'fail',
+            'type' => 'error',
+            'message' => $message
+        ], $status); // 200
     }
     public function JSONsuccess($message, $status){
         return response()->json([
-            'success' => true,
+            "code" => $status,
+            'status' => 'success',
             'message' => [
                 'status' => $message
-            ]
+            ],
         ],$status);
     }
-    public function JSONsuccessArray($Message, $NameArray, $Array, $Status){
+    public function JSONsuccessArray($message, $name_array, $array, $status)
+    {
         return response()->json([
-            'success' => true,
-            'status' => $Message,
-            $NameArray => $Array
-        ],$Status);
+            "code" => $status,
+            'status' => 'success',
+            'message' => $message,
+            $name_array => $array
+        ],$status);
     }
 }
