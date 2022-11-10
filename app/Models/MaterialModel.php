@@ -27,6 +27,11 @@ class MaterialModel extends Model
 //        'updated_at',
         'Accounting'
     ];
+
+    public function getFillable()
+    {
+        return $this->fillable;
+    }
 protected $guarded = ['created_at'];
     public function decor(): HasOne
     {

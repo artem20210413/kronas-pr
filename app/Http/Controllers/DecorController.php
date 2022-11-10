@@ -106,7 +106,7 @@ class DecorController extends Controller
                 //$GetTM = "";
                 if ($vName == null) {
                     $GetTM = DB::table('decor')->where('id', 'like', "%" . $vId . "%")->get();
-                } else{
+                } else {
                     $GetTM = DB::table('decor')->where('name', 'like', "%" . $vName . "%")->get();
                 }
                 return $JSON->JSONsuccessArray('Get name by like ' . $request->input('name') . '',
@@ -115,10 +115,6 @@ class DecorController extends Controller
                     200);
             }
 
-//                $request->validate([
-//                    'name' => 'required'
-//                ]);
-//                  $request->input('name') . "%")->get();
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }
@@ -126,7 +122,6 @@ class DecorController extends Controller
 
     public function DecorDestroy(DecorRequest $request, JSONcontroller $JSON)
     {
-        //dd($request);
         try {
             $vId = $request->post('id');
             if ($vId != null) {

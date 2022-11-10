@@ -24,6 +24,19 @@ class MaterialController extends Controller
 
     }
 
+    public function MaterialHelp()
+    {
+        $material = new MaterialModel();
+        $fields = "";
+        foreach ($material->getFillable() as $key => $value) {
+            $fields = $fields . '`' . $value . '` ';
+        }
+        return response()->json([
+            'Список полів у таблиці' => $fields
+        ], 200);
+    }
+
+
     public function MaterialGet(Request $request, JSONcontroller $JSON)
     {
         try {

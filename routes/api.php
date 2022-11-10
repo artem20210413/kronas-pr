@@ -37,6 +37,7 @@ Route::get('/users/{user}', function (User $user) {
 
 
 
+Route::get('v1/material/help', [MaterialController::class, 'MaterialHelp']);
 Route::get('v1/material', [MaterialController::class, 'MaterialGet']);
 Route::post('v1/material', [MaterialController::class, 'MaterialPost']);
 
