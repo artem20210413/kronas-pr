@@ -63,7 +63,7 @@ return new class extends Migration
 
         Schema::create('material', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vendor_code');
+            $table->string('vendor_code',32);
             $table->unsignedBigInteger('type_material_id');
             $table->unsignedBigInteger('decor_id');
             $table->unsignedBigInteger('cell_id');

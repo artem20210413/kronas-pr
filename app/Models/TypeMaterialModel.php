@@ -8,11 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class TypeMaterialModel extends Model
 {
     use HasFactory;
+
     public $table = 'type_material';
     public $timestamps = false;
+
     protected $fillable = [
         'id',
         'name'
     ];
 
+    protected static function boot(): void
+    {
+        parent::boot();
+    }
 }

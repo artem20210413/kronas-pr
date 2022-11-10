@@ -12,10 +12,9 @@ class TypeMaterialController extends Controller
 {
     public function TypeMaterialCreate(Request $request, JSONcontroller $JSON)//TypeMaterialRequest $TMR
     {
-
         try {
-            $vId = $request->get('id');
-            $vName = $request->get('name');
+            $vId = $request->post('id');
+            $vName = $request->post('name');
             if ($vName == null) {
                 return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 401);
             } else if ($vId == null || $vId == 0) {
@@ -25,11 +24,17 @@ class TypeMaterialController extends Controller
                 $vNewDecor = DB::table('type_material')->latest('id')->first();
                 return $JSON->JSONsuccessArray('Create', 'New type material', $vNewDecor, 201);
             } else {
-                $decor = TypeMaterialModel::find($vId);
-                $decor->update($request->all());
+
+                $ts = TypeMaterialModel::find($vId);
+                if ($ts == null) {
+                    return $JSON->JSONerror('Елемента з id: ' . $vId . ' не існує', 501);
+                }
+                $ts->update($request->all());
+                //dd($decor);
                 $vUpdateDecor = DB::table('type_material')->where('id', $vId)->get();
                 return $JSON->JSONsuccessArray('Update', 'Type material', $vUpdateDecor, 201);
             }
+
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }

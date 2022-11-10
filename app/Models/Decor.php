@@ -11,6 +11,7 @@ class Decor extends Model
 
     public $table = 'decor';
     public $timestamps = false;
+
     protected $fillable = [
         'id',
         'name'

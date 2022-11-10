@@ -23,11 +23,11 @@ class MaterialModel extends Model
         'Length',
         'Width',
         'Thickness',
-        'created_at',
-        'updated_at',
+//        'created_at',
+//        'updated_at',
         'Accounting'
     ];
-
+protected $guarded = ['created_at'];
     public function decor(): HasOne
     {
         return $this->hasOne(Decor::class, 'id', 'decor_id');
