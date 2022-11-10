@@ -15,7 +15,7 @@ class StoryMaterialController extends Controller
         $SM = new StoryMaterialModel();
         $material =  MaterialModel::find($materialId);
 
-        //$SM->id = null;
+        $SM->id = null;
         $SM->vendor_code = $material->vendor_code;
         $SM->type_material = TypeMaterialModel::find($material->type_material_id)->name ;
         $SM->decor = Decor::find($material->decor_id)->name;
@@ -29,9 +29,9 @@ class StoryMaterialController extends Controller
         $SM->accounting = $material->accounting;
         $SM->kronas_user = $code_user;
         $SM->action_material_id = $action;
-        dump($SM);
+       // dump($SM);
         $SM->save();
-        dd($SM);
+       // dd($SM);
         return true;
     }
 }

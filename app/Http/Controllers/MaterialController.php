@@ -114,7 +114,6 @@ class MaterialController extends Controller
     }
 
 
-
     public function MaterialPost(Request $request, JSONcontroller $JSON, StoryMaterialController $storyMaterial)
     {
         try {
@@ -129,7 +128,7 @@ class MaterialController extends Controller
             $vThickness = $request->get('thickness');
             $vUser = $request->get('code_user');
 
-           // $storyMaterial->StoryMaterialPost($vId, $vUser);
+            // $storyMaterial->StoryMaterialPost($vId, $vUser);
             //$vAccounting = $request->get('accounting');
             if ($vUser != null) {
                 if ($vId == null || $vId == 0) {
@@ -149,7 +148,10 @@ class MaterialController extends Controller
                         $material->save();
 
                         $vNewMaterial = DB::table('material')->latest('id')->first();
-                        //$storyMaterial->StoryMaterialPost($vNewMaterial->id, $vUser,1);
+
+                        //Запись в историю
+                        $storyMaterial->StoryMaterialPost($vNewMaterial->id, $vUser,1);
+
                         return $JSON->JSONsuccessArray('Get  all', 'New material', $vNewMaterial, 201);
                     }
                 } else { //Оновлення поля
@@ -164,8 +166,8 @@ class MaterialController extends Controller
                     }
                     $materialU->updated_at = Carbon::now();
                     $materialU->update();
-
-                                                $storyMaterial->StoryMaterialPost($vId, $vUser,1);
+                    //Запись в историю
+                    $storyMaterial->StoryMaterialPost($vId, $vUser, 2);
 
                     $vUpdateDecor = DB::table('material')->where('id', $vId)->get();
                     return $JSON->JSONsuccessArray('Update', 'Update material', $vUpdateDecor, 201);
