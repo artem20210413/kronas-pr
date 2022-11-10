@@ -34,7 +34,7 @@ class MaterialController extends Controller
         ], 200);
     }
 
-    public function MaterialGet(Request $request, JSONcontroller $JSON)
+    public function MaterialGetId(Request $request, JSONcontroller $JSON)
     {
         try {
             $vId = $request->get('id');
@@ -58,7 +58,7 @@ class MaterialController extends Controller
                 $m = MaterialModel::where('id', '<>', 0);
 
                 foreach ($request->all() as $key => $req)
-                    if ($key == 'length' || $key == 'width' || $key == 'thickness')
+                    if ($key == 'length' || $key == 'width' || $key == 'thickness' || $key == 'created_at' || $key == 'updated_at')
                         $m->where($key, 'like', "%" . $req . "%");
                     else $m->where($key, $req);
 
@@ -88,6 +88,56 @@ class MaterialController extends Controller
                 return $JSON->JSONsuccessArray('Пошук по змінній',
                     'Material',
                     $GetTM,
+                    200);
+            }
+        } catch (\Exception $e) {
+            return $JSON->JSONerror($e->getMessage(), 501);
+        }
+    }
+
+    //В работе
+    public function MaterialGetName(Request $request, JSONcontroller $JSON)
+    {
+        try {
+            $vId = $request->get('id');
+            $vVendor_code = $request->get('vendor_code');
+            $vType_material = $request->get('type_material');
+            $vDecor = $request->get('decor');
+            $vCell = $request->get('cell');
+            $vLength = $request->get('length');
+            $vWidth = $request->get('width');
+            $vThickness = $request->get('thickness');
+            $vCreated_at = $request->get('created_at');
+            $vUpdated_at = $request->get('updated_at');
+            $vAccounting = $request->get('accounting');
+
+            if ($vId == null && $vVendor_code == null && $vType_material == null && $vDecor == null && $vCell == null
+                && $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null) {
+                $material = new MaterialModel(); //model
+                return $JSON->JSONsuccessArray('Get  all', 'Material', $material::all(), 200);
+            } else {
+
+
+                $m = MaterialModel::where('id', '<>', 0);
+                foreach ($request->all() as $key => $req)
+                    if ($key == 'length' || $key == 'width' || $key == 'thickness' || $key == 'created_at' || $key == 'updated_at')
+                        $m->where($key, 'like', "%" . $req . "%");
+                    else $m->where($key, $req);
+
+                $GetTMs = $m->get();
+
+                foreach ($GetTMs as $TM) {
+
+                    foreach ($TM as $key => $value)
+                    {
+                        dump($key);
+                        //dump($key . ' = ' .$value);
+                    }
+                }
+
+                return $JSON->JSONsuccessArray('Пошук по змінній',
+                    'Material',
+                    $GetTMs,
                     200);
             }
         } catch (\Exception $e) {
@@ -150,7 +200,7 @@ class MaterialController extends Controller
                         $vNewMaterial = DB::table('material')->latest('id')->first();
 
                         //Запись в историю
-                        $storyMaterial->StoryMaterialPost($vNewMaterial->id, $vUser,1);
+                        $storyMaterial->StoryMaterialPost($vNewMaterial->id, $vUser, 1);
 
                         return $JSON->JSONsuccessArray('Get  all', 'New material', $vNewMaterial, 201);
                     }
