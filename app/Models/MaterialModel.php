@@ -20,12 +20,12 @@ class MaterialModel extends Model
         'type_material_id',
         'decor_id',
         'cell_id',
-        'Length',
-        'Width',
-        'Thickness',
+        'length',
+        'width',
+        'thickness',
 //        'created_at',
 //        'updated_at',
-        'Accounting'
+        'accounting'
     ];
 
     public function getFillable()

@@ -20,8 +20,6 @@ class MaterialController extends Controller
             return ' ' . $string;
         else
             return '';
-
-
     }
 
     public function MaterialHelp()
@@ -35,7 +33,6 @@ class MaterialController extends Controller
             'Список полів у таблиці' => $fields
         ], 200);
     }
-
 
     public function MaterialGet(Request $request, JSONcontroller $JSON)
     {
@@ -66,8 +63,7 @@ class MaterialController extends Controller
                     else $m->where($key, $req);
 
                 $GetTM = $m->get();
-                //dd(MaterialCollection::collection($m->get())->toJson());
-                //return MaterialCollection::collection($m->get());
+
 //                //$m = MaterialModel::where(['id' => $vId, 'vendor_code' => $vVendor_code])->get();
 //                $GetTM = DB::table('material')
 //                    ->where('id', 'like', "%" . $vId . "%")
@@ -88,6 +84,7 @@ class MaterialController extends Controller
 //                foreach ($m as $k => $v){
 //                    echo $v->decor->name;
 //                }
+
                 return $JSON->JSONsuccessArray('Пошук по змінній',
                     'Material',
                     $GetTM,
