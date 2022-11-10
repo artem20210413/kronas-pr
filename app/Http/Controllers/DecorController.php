@@ -12,47 +12,8 @@ use Illuminate\Support\Facades\URL;
 class DecorController extends Controller
 {
 
-//    public function testURL(Request $request, JSONcontroller $JSON)
-//    {
-//
-////        Route::get('test/&v={v}',[DecorController::class, 'testURL']);//test
-////        $first = request()->segment(3);
-////        $second = request()->segment(4);
-//////        $param = URL::current();
-////        $part_1 = $request->route('part_1');
-////        $part_2 = $request->route('part_2');
-////        $part_1_  =explode("=", $part_1);
-////        $part_2_  =explode("=", $part_2);
-////
-////        if($part_1_[0]='name'){
-////            echo 'name = '. $part_1_[1].' / ';
-////            echo 'id = '. $part_2_[1];
-////        }else if ($part_1_[0]='id')
-////        {
-////            echo 'name = '. $part_2_[1].' / ';
-////            echo 'id = '. $part_1_[1].' / ';
-////        }
-//
-//        echo $this->get_URL_variable($request, 'id', 2);
-//        // echo $part_1_[1] . '_' . $part_2_[1];
-//    }
-
-//    public function testURL2(Request $request, JSONcontroller $JSON)
-//    {
-////       dd($request->get('a'));
-//        dd($request->all());
-//    }
-
     public function DecorCreateAndUpdate(Request $request, JSONcontroller $JSON)
     {
-        //dd($request->all());
-//        if($request->method() == 'POST')
-//        {
-//            $decor = new Decor();
-//            //$decor->name = $request->input('name');
-//            $decor->seve();
-//                return $JSON->JSONsuccess('Успіх', 201);
-//        }
         try {
             $vId = $request->post('id');
             $vName = $request->post('name');
@@ -78,22 +39,6 @@ class DecorController extends Controller
         }
     }
 
-    /*
-        public function DecorUpdate(DecorRequest $request, JSONcontroller $JSON)
-        {
-            try {
-                $decor = Decor::find($request->post('id'));
-                //$decor->name = $request->input('name');
-                //$decor->save();
-                //and
-                $decor->update($request->all());
-                return $JSON->JSONsuccess('Успіх', 201);
-
-            } catch (\Exception $e) {
-                return $JSON->JSONerror($e->getMessage(), 501);
-            }
-        }
-    */
     public function DecorGet(Request $request, JSONcontroller $JSON)
     {
         try {
