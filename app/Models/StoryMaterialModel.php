@@ -4,15 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class MaterialModel extends Model
+class StoryMaterialModel extends Model
 {
     use HasFactory;
-
-    public $table = 'material';
+    public $table = 'story_material';
     public $timestamps = false;
     protected $fillable = [
         'id',
@@ -24,16 +21,14 @@ class MaterialModel extends Model
         'width',
         'thickness',
         'code_user',
-//        'created_at',
-//        'updated_at',
+        'code_user',
+        'created_at',
+        'updated_at',
         'accounting'
     ];
 
-    public function getFillable()
-    {
-        return $this->fillable;
-    }
-protected $guarded = ['created_at'];
+
+
     public function decor(): HasOne
     {
         return $this->hasOne(Decor::class, 'id', 'decor_id');

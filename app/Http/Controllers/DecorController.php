@@ -125,7 +125,6 @@ class DecorController extends Controller
         try {
             $vId = $request->post('id');
             if ($vId != null) {
-
                 $res = Decor::destroy($vId);
                 if ($res != 0) {
                     return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);

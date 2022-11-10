@@ -40,9 +40,7 @@ Route::get('/users/{user}', function (User $user) {
 Route::get('v1/material/help', [MaterialController::class, 'MaterialHelp']);
 Route::get('v1/material', [MaterialController::class, 'MaterialGet']);
 Route::post('v1/material', [MaterialController::class, 'MaterialPost']);
-
-
-
+Route::delete('v1/material', [MaterialController::class, 'MaterialDelete']);
 
 //Route::get('v1/cell/{cell_id}/get', [CellController::class, 'CellId']);
 Route::get('v1/cell', [CellController::class, 'CellGet']);

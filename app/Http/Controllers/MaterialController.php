@@ -95,10 +95,30 @@ class MaterialController extends Controller
         }
     }
 
-
-    public function MaterialPost(Request $request, JSONcontroller $JSON)
+    public function MaterialDelete(Request $request, JSONcontroller $JSON)
     {
         try {
+            if ($vId = $request->post('id') != null) {
+                $res = MaterialModel::destroy($vId);
+                if ($res != 0) {
+                    return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);
+                } else {
+                    return $JSON->JSONerror('Елемент з id=' . $vId . ' не видален, відсутній або сталася помилка', 401);
+                }
+            } else return $JSON->JSONerror('Відсутнє обов`язкове поле `id`', 401);
+
+
+        } catch (\Exception $e) {
+            return $JSON->JSONerror($e->getMessage(), 501);
+        }
+    }
+
+
+
+    public function MaterialPost(Request $request, JSONcontroller $JSON, StoryMaterialController $storyMaterial)
+    {
+        try {
+
             $vId = $request->post('id');
             $vVendor_code = $request->get('vendor_code');
             $vType_material_id = $request->get('type_material_id');
@@ -107,43 +127,51 @@ class MaterialController extends Controller
             $vLength = $request->get('length');
             $vWidth = $request->get('width');
             $vThickness = $request->get('thickness');
-            //$vAccounting = $request->get('accounting');
-            if ($vId == null || $vId == 0) {
+            $vUser = $request->get('code_user');
 
-                if ($vVendor_code == null && $vType_material_id == null && $vDecor_id == null && $vCell_id == null
-                    && $vLength == null && $vWidth == null && $vThickness == null) {
-                    return $JSON->JSONerror('якогось із обов`зкових полів не існує або воно порожнє: `vendor_code`, `type_material_id`, `decor_id`, `cell_id`, `length`, `width`, `thickness`', 401);
-                } else {//Створення поля
-                    $material = new MaterialModel();
+           // $storyMaterial->StoryMaterialPost($vId, $vUser);
+            //$vAccounting = $request->get('accounting');
+            if ($vUser != null) {
+                if ($vId == null || $vId == 0) {
+                    if ($vVendor_code == null && $vType_material_id == null && $vDecor_id == null && $vCell_id == null
+                        && $vLength == null && $vWidth == null && $vThickness == null) {
+                        return $JSON->JSONerror('якогось із обов`зкових полів не існує або воно порожнє: `vendor_code`, `type_material_id`, `decor_id`, `cell_id`, `length`, `width`, `thickness`', 401);
+                    } else {//Створення поля
+                        $material = new MaterialModel();
+                        foreach ($request->all() as $key => $value) {
+                            if (($key != 'created_at' || $key != 'updated_at') && Schema::hasColumn($material->table, $key)) {
+                                $material->{$key} = $value;
+                            }
+                        }
+                        $material->created_at = Carbon::now();
+                        $material->updated_at = Carbon::now();//Carbon::toDateTimeString();;
+                        $material->accounting = 1;
+                        $material->save();
+
+                        $vNewMaterial = DB::table('material')->latest('id')->first();
+                        //$storyMaterial->StoryMaterialPost($vNewMaterial->id, $vUser,1);
+                        return $JSON->JSONsuccessArray('Get  all', 'New material', $vNewMaterial, 201);
+                    }
+                } else { //Оновлення поля
+                    $materialU = MaterialModel::find($vId);
+                    if ($materialU == null) {
+                        return $JSON->JSONerror('Елемента з id: ' . $vId . ' не існує', 501);
+                    }
                     foreach ($request->all() as $key => $value) {
-                        if (($key != 'created_at' || $key != 'updated_at') && Schema::hasColumn($material->table, $key)) {
-                            $material->{$key} = $value;
+                        if (($key != 'created_at' || $key != 'updated_at') && Schema::hasColumn($materialU->table, $key)) {
+                            $materialU->{$key} = $value;
                         }
                     }
-                    $material->created_at = Carbon::now();
-                    $material->updated_at = Carbon::now();//Carbon::toDateTimeString();;
-                    $material->accounting = 1;
-                    $material->save();
+                    $materialU->updated_at = Carbon::now();
+                    $materialU->update();
 
-                    $vNewMaterial = DB::table('material')->latest('id')->first();
+                                                $storyMaterial->StoryMaterialPost($vId, $vUser,1);
 
-                    return $JSON->JSONsuccessArray('Get  all', 'New material', $vNewMaterial, 201);
+                    $vUpdateDecor = DB::table('material')->where('id', $vId)->get();
+                    return $JSON->JSONsuccessArray('Update', 'Update material', $vUpdateDecor, 201);
                 }
-            } else { //Оновлення поля
-                $materialU = MaterialModel::find($vId);
-                if ($materialU == null) {
-                    return $JSON->JSONerror('Елемента з id: ' . $vId . ' не існує', 501);
-                }
-                foreach ($request->all() as $key => $value) {
-                    if (($key != 'created_at' || $key != 'updated_at') && Schema::hasColumn($materialU->table, $key)) {
-                        $materialU->{$key} = $value;
-                    }
-                }
-                $materialU->updated_at = Carbon::now();
-                $materialU->update();
-
-                $vUpdateDecor = DB::table('material')->where('id', $vId)->get();
-                return $JSON->JSONsuccessArray('Update', 'Update material', $vUpdateDecor, 201);
+            } else {
+                return $JSON->JSONerror('Обов`язкове поле `code_user` не існує або порожне', 401);
             }
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);

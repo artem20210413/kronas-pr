@@ -123,12 +123,10 @@ class CellController extends Controller
     public function CellGet(Request $request, JSONcontroller $JSON)
     {
         try {
-            $vId = $request->get('id');
-            $vRack = $request->get('rack');
-            if ($vId != null) {
+            if ($vId = $request->get('id') != null) {
                 $vCall = DB::table('cell')->where('id', $vId)->get();
                 return $JSON->JSONsuccessArray('get by id: `' . $vId . '`', 'Cells', $vCall, 401);
-            } else if ($vRack != null) {
+            } else if ($vRack = $request->get('rack') != null) {
                 $vCall = DB::table('cell')->where('rack', $vRack)->get();
                 return $JSON->JSONsuccessArray('get by rack: `' . $vRack . '`', 'Cells', $vCall, 401);
                 ////return $JSON->JSONsuccess('Destroy array by rack = '. $vRack. '. delete ' . $count .' elements.', 201);

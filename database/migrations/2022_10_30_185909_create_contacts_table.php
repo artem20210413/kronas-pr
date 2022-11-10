@@ -43,7 +43,7 @@ return new class extends Migration
         });
         Schema::create('story_material', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vendor_code');
+            $table->string('vendor_code', 32);
             $table->string('type_material');
             $table->string('decor');
             $table->string('cell');
@@ -53,7 +53,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('kronas_user');
             $table->unsignedBigInteger('action_material_id');
-            $table->tinyInteger('accounting', 1);//- 1
+            $table->tinyInteger('accounting', 2);//- 2
 
             $table->foreign('action_material_id')
                 ->references('id')
