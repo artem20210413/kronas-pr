@@ -23,10 +23,10 @@ return new class extends Migration
             $table->integer('width');
             $table->integer('thickness');
             $table->timestamps();
-            $table->unsignedBigInteger('kronas_user');
+            $table->string('kronas_user', 20);
             $table->string('storage_code',20);
             $table->unsignedBigInteger('action_material_id');
-            $table->tinyInteger('accounting', 2);//- 2
+            $table->tinyInteger('accounting');
 
             $table->foreign('action_material_id')
                 ->references('id')
