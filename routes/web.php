@@ -15,6 +15,26 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
+Route::get('/laravel', function () {
     return view('welcome');
 });
+Route::get('/', function (){
+    return view('production_material');
+});
+
+Route::get('/cell', function (){
+    return view('cell');
+});
+
+Route::get('/decor', function (){
+    return view('decor');
+});
+
+Route::get('/type_material', function (){
+    return view('type_material');
+});
+
+Route::get('/story_material', function (){
+    return view('story_material');
+});
+
