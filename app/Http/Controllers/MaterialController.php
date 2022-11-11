@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\MaterialCollection;
+use App\Models\MaterialAllModel;
 use App\Models\MaterialModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -22,6 +23,12 @@ class MaterialController extends Controller
             return '';
     }
 
+    public function GG(Request $request){
+        //dd(MaterialAllModel::cell());
+        dd(DB::select('CALL material_decor(' . $request->get('id') . ')'));
+
+    }
+
     public function MaterialHelp()
     {
         $material = new MaterialModel();
@@ -34,7 +41,7 @@ class MaterialController extends Controller
         ], 200);
     }
 
-    public function MaterialGetId(Request $request, JSONcontroller $JSON)
+    public function MaterialGet(Request $request, JSONcontroller $JSON)
     {
         try {
             $vId = $request->get('id');
@@ -48,9 +55,10 @@ class MaterialController extends Controller
             $vCreated_at = $request->get('created_at');
             $vUpdated_at = $request->get('updated_at');
             $vAccounting = $request->get('accounting');
+            $vStorageCode = $request->get('storage_code');
 
             if ($vId == null && $vVendor_code == null && $vType_material_id == null && $vDecor_id == null && $vCell_id == null
-                && $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null) {
+                && $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null && $vStorageCode == null) {
                 $material = new MaterialModel(); //model
                 return $JSON->JSONsuccessArray('Get  all', 'Material', $material::all(), 200);
             } else {
@@ -95,60 +103,11 @@ class MaterialController extends Controller
         }
     }
 
-    //В работе
-    public function MaterialGetName(Request $request, JSONcontroller $JSON)
-    {
-        try {
-            $vId = $request->get('id');
-            $vVendor_code = $request->get('vendor_code');
-            $vType_material = $request->get('type_material');
-            $vDecor = $request->get('decor');
-            $vCell = $request->get('cell');
-            $vLength = $request->get('length');
-            $vWidth = $request->get('width');
-            $vThickness = $request->get('thickness');
-            $vCreated_at = $request->get('created_at');
-            $vUpdated_at = $request->get('updated_at');
-            $vAccounting = $request->get('accounting');
-
-            if ($vId == null && $vVendor_code == null && $vType_material == null && $vDecor == null && $vCell == null
-                && $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null) {
-                $material = new MaterialModel(); //model
-                return $JSON->JSONsuccessArray('Get  all', 'Material', $material::all(), 200);
-            } else {
-
-
-                $m = MaterialModel::where('id', '<>', 0);
-                foreach ($request->all() as $key => $req)
-                    if ($key == 'length' || $key == 'width' || $key == 'thickness' || $key == 'created_at' || $key == 'updated_at')
-                        $m->where($key, 'like', "%" . $req . "%");
-                    else $m->where($key, $req);
-
-                $GetTMs = $m->get();
-
-                foreach ($GetTMs as $TM) {
-
-                    foreach ($TM as $key => $value)
-                    {
-                        dump($key);
-                        //dump($key . ' = ' .$value);
-                    }
-                }
-
-                return $JSON->JSONsuccessArray('Пошук по змінній',
-                    'Material',
-                    $GetTMs,
-                    200);
-            }
-        } catch (\Exception $e) {
-            return $JSON->JSONerror($e->getMessage(), 501);
-        }
-    }
 
     public function MaterialDelete(Request $request, JSONcontroller $JSON)
     {
         try {
-            if ($vId = $request->post('id') != null) {
+            if (($vId = $request->post('id')) != null) {
                 $res = MaterialModel::destroy($vId);
                 if ($res != 0) {
                     return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);
@@ -177,14 +136,15 @@ class MaterialController extends Controller
             $vWidth = $request->get('width');
             $vThickness = $request->get('thickness');
             $vUser = $request->get('code_user');
+            $vStorageCode = $request->get('storage_code');
 
             // $storyMaterial->StoryMaterialPost($vId, $vUser);
             //$vAccounting = $request->get('accounting');
             if ($vUser != null) {
                 if ($vId == null || $vId == 0) {
                     if ($vVendor_code == null && $vType_material_id == null && $vDecor_id == null && $vCell_id == null
-                        && $vLength == null && $vWidth == null && $vThickness == null) {
-                        return $JSON->JSONerror('якогось із обов`зкових полів не існує або воно порожнє: `vendor_code`, `type_material_id`, `decor_id`, `cell_id`, `length`, `width`, `thickness`', 401);
+                        && $vLength == null && $vWidth == null && $vThickness == null && $vStorageCode == null) {
+                        return $JSON->JSONerror('якогось із обов`зкових полів не існує або воно порожнє: `vendor_code`, `type_material_id`, `decor_id`, `cell_id`, `length`, `width`, `thickness`, `storage_code`', 401);
                     } else {//Створення поля
                         $material = new MaterialModel();
                         foreach ($request->all() as $key => $value) {

@@ -99,18 +99,6 @@ class CellController extends Controller
             } else {
                 return $JSON->JSONerror('Нічого не передали або немає аргументів `id` або `rack`', 401);
             }
-//            try {
-//                $request->validate([
-//                    'rack' => 'required',
-//                    'storey' => 'required',
-//                    'row' => 'required'
-//                ]);
-//            } catch (\Exception) {
-//                throw new \Exception('У запиті не знайшло `rack, storey або row`');
-//            }
-//            /*видаляємо масив елементів*/
-//            $res = Cell::destroy($request->get('ids'));
-//            return $JSON->JSONsuccess('Cells deleted!' . $res . ' el', 200);
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 400);
         }
@@ -124,12 +112,12 @@ class CellController extends Controller
     {
         try {
             if ($vId = $request->get('id') != null) {
+
                 $vCall = DB::table('cell')->where('id', $vId)->get();
                 return $JSON->JSONsuccessArray('get by id: `' . $vId . '`', 'Cells', $vCall, 401);
-            } else if ($vRack = $request->get('rack') != null) {
+            } else if (($vRack = $request->get('rack')) != null) {
                 $vCall = DB::table('cell')->where('rack', $vRack)->get();
-                return $JSON->JSONsuccessArray('get by rack: `' . $vRack . '`', 'Cells', $vCall, 401);
-                ////return $JSON->JSONsuccess('Destroy array by rack = '. $vRack. '. delete ' . $count .' elements.', 201);
+               return $JSON->JSONsuccessArray('get by rack: `' . $vRack . '`', 'Cells', $vCall, 401);
             } else {
                 return $JSON->JSONsuccessArray('all', 'Cells', Cell::all(), 401);
             }

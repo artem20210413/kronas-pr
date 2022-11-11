@@ -16,12 +16,12 @@ class DecorController extends Controller
     {
         try {
             $vId = $request->post('id');
-            $vName = $request->post('name');
+            $vName = $request->post('decor_name');
             if ($vName == null) {
-                return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 401);
+                return $JSON->JSONerror('Нічого не передали або немає аргумента `decor_name`', 401);
             } else if ($vId == null || $vId == 0) {
                 $decor = new Decor();
-                $decor->name = $vName;
+                $decor->decor_name = $vName;
                 $decor->save();
                 $vNewDecor = DB::table('decor')->latest('id')->first();
                 return $JSON->JSONsuccessArray('Create', 'New decor', $vNewDecor, 201);
@@ -42,7 +42,7 @@ class DecorController extends Controller
     public function DecorGet(Request $request, JSONcontroller $JSON)
     {
         try {
-            $vName = $request->get('name');
+            $vName = $request->get('decor_name');
             $vId = $request->get('id');
             if ($vName == null && $vId == null) {
                 $decor = new Decor(); //model
@@ -52,9 +52,9 @@ class DecorController extends Controller
                 if ($vName == null) {
                     $GetTM = DB::table('decor')->where('id', 'like', "%" . $vId . "%")->get();
                 } else {
-                    $GetTM = DB::table('decor')->where('name', 'like', "%" . $vName . "%")->get();
+                    $GetTM = DB::table('decor')->where('decor_name', 'like', "%" . $vName . "%")->get();
                 }
-                return $JSON->JSONsuccessArray('Get name by like ' . $request->input('name') . '',
+                return $JSON->JSONsuccessArray('Get name by like ' . $vName = $request->get('decor_name') . '',
                     'Decor',
                     $GetTM,
                     200);

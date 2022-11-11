@@ -14,7 +14,7 @@ class Decor extends Model
 
     protected $fillable = [
         'id',
-        'name'
+        'decor_name'
     ];
 
     protected static function boot(): void

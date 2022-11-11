@@ -14,12 +14,12 @@ class TypeMaterialController extends Controller
     {
         try {
             $vId = $request->post('id');
-            $vName = $request->post('name');
+            $vName = $request->post('tm_name');
             if ($vName == null) {
-                return $JSON->JSONerror('Нічого не передали або немає аргумента `name`', 401);
+                return $JSON->JSONerror('Нічого не передали або немає аргумента `tm_name`', 401);
             } else if ($vId == null || $vId == 0) {
                 $decor = new TypeMaterialModel();
-                $decor->name = $vName;
+                $decor->tm_name = $vName;
                 $decor->save();
                 $vNewDecor = DB::table('type_material')->latest('id')->first();
                 return $JSON->JSONsuccessArray('Create', 'New type material', $vNewDecor, 201);
@@ -54,14 +54,13 @@ class TypeMaterialController extends Controller
     {
 
         try {
-            $vName = $request->get('name');
+            $vName = $request->get('tm_name');
             if ($vName == null) {
                 $decor = new TypeMaterialModel(); //model
                 return $JSON->JSONsuccessArray('Get  all', 'Decor', $decor::all(), 200);
             } else {
-
-                $GetTM = DB::table('type_material')->where('name', 'like', "%" . $request->get('name') . "%")->get();
-                return $JSON->JSONsuccessArray('Get name by like ' . $request->input('name') . '',
+                $GetTM = DB::table('type_material')->where('tm_name', 'like', "%" .$vName . "%")->get();
+                return $JSON->JSONsuccessArray('Get name by like ' . $vName . '',
                     'Decor',
                     $GetTM,
                     200);

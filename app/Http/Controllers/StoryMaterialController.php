@@ -27,9 +27,10 @@ class StoryMaterialController extends Controller
             $vCreated_at = $request->get('created_at');
             $vUpdated_at = $request->get('updated_at');
             $vAccounting = $request->get('accounting');
+            $vStorageCode = $request->get('storage_code');
 
-            if ($vId == null && $vVendor_code == null && $vType_material_id == null && $vDecor_id == null && $vCell_id == null
-                && $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null) {
+            if ($vId == null && $vVendor_code == null && $vType_material_id == null && $vDecor_id == null && $vCell_id == null &&
+                 $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null && $vStorageCode == null) {
                 $SM = new StoryMaterialModel(); //model
                 return $JSON->JSONsuccessArray('Get  all', 'Story material', $SM::all(), 200);
             } else {
@@ -60,8 +61,8 @@ class StoryMaterialController extends Controller
 
         $SM->id = null;
         $SM->vendor_code = $material->vendor_code;
-        $SM->type_material = TypeMaterialModel::find($material->type_material_id)->name;
-        $SM->decor = Decor::find($material->decor_id)->name;
+        $SM->type_material = TypeMaterialModel::find($material->type_material_id)->tm_name;
+        $SM->decor = Decor::find($material->decor_id)->decor_name;
         $cell = Cell::find($material->cell_id);
         $SM->cell = $cell->rack . '-' . $cell->storey . '-' . $cell->row;
         $SM->length = $material->length;
@@ -70,8 +71,10 @@ class StoryMaterialController extends Controller
         $SM->created_at = $material->created_at;
         $SM->updated_at = $material->updated_at;
         $SM->accounting = $material->accounting;
+        $SM->storage_code = $material->storage_code;
         $SM->kronas_user = $kronas_user;
         $SM->action_material_id = $action_material_id;
+        //dd($SM);
         // dump($SM);
         $SM->save();
         // dd($SM);

@@ -22,12 +22,12 @@ return new class extends Migration
         });
         Schema::create('decor', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('decor_name');
             //$table->timestamps();
         });
         Schema::create('type_material', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('tm_name');
             //$table->timestamps();
         });
         /*статика*/
@@ -43,7 +43,7 @@ return new class extends Migration
         });
         Schema::create('story_material', function (Blueprint $table) {
             $table->id();
-            $table->string('vendor_code', 32);
+            $table->string('vendor_code', 20);
             $table->string('type_material');
             $table->string('decor');
             $table->string('cell');
@@ -52,6 +52,7 @@ return new class extends Migration
             $table->integer('thickness');
             $table->timestamps();
             $table->unsignedBigInteger('kronas_user');
+            $table->string('storage_code',20);
             $table->unsignedBigInteger('action_material_id');
             $table->tinyInteger('accounting', 2);//- 2
 
@@ -71,6 +72,7 @@ return new class extends Migration
             $table->integer('width');
             $table->integer('thickness');
             $table->timestamps();
+            $table->string('storage_code', 20);
             $table->tinyInteger('accounting');
 
             /*  созадем связь   */
