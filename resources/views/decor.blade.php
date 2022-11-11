@@ -1,13 +1,16 @@
 @extends('layout')
 
 @section('title')
-    Production material
+    Decor
 @endsection
 @section('body')
 
 
-    <p>aaaaaaaa</p>
+    <p>Decor</p>
+<?php
 
+dd($GLOBALS);
+    ?>
 
 
 @endsection

@@ -43,9 +43,6 @@ Route::get('v1/material', [MaterialController::class, 'MaterialGet']);
 Route::post('v1/material', [MaterialController::class, 'MaterialPost']);
 Route::delete('v1/material', [MaterialController::class, 'MaterialDelete']);
 
-Route::get('v1/GG', [MaterialController::class, 'GG']); //TEST
-
-
 Route::get('v1/story-material', [StoryMaterialController::class, 'StoryMaterialGet']);
 
 //Route::get('v1/cell/{cell_id}/get', [CellController::class, 'CellId']);

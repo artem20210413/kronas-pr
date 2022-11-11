@@ -17,11 +17,12 @@
         <div class="flex-wrap align-items-center  justify-content-center justify-content-lg-start">
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 text-secondary">Production material</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Decor</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Type material</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Cell</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Story material</a></li>
+
+                <li><a href="/" class="nav-link px-2 text-white">Production material</a></li><!--class="nav-link px-2 text-secondary"-->
+                <li><a href="/decor"  class="nav-link px-2 text-white">Decor</a></li>
+                <li><a href="/type_material" class="nav-link px-2 text-white">Type material</a></li>
+                <li><a href="/cell" class="nav-link px-2 text-white">Cell</a></li>
+                <li><a href="/story_material" class="nav-link px-2 text-white">Story material</a></li>
             </ul>
             <!--
                         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">

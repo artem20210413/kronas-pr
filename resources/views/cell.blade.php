@@ -1,12 +1,12 @@
 @extends('layout')
 
 @section('title')
-    Production material
+    Cell
 @endsection
 @section('body')
 
 
-    <p>aaaaaaaa</p>
+    <p>Cell</p>
 
 
 

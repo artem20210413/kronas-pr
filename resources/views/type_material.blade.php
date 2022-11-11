@@ -1,12 +1,13 @@
 @extends('layout')
 
 @section('title')
-    Production material
+    Type material
 @endsection
+
 @section('body')
 
 
-    <p>aaaaaaaa</p>
+    <p>Type materia</p>
 
 
 

@@ -18,21 +18,29 @@ class TypeMaterialController extends Controller
             if ($vName == null) {
                 return $JSON->JSONerror('Нічого не передали або немає аргумента `tm_name`', 401);
             } else if ($vId == null || $vId == 0) {
-                $decor = new TypeMaterialModel();
-                $decor->tm_name = $vName;
-                $decor->save();
-                $vNewDecor = DB::table('type_material')->latest('id')->first();
-                return $JSON->JSONsuccessArray('Create', 'New type material', $vNewDecor, 201);
+                if (TypeMaterialModel::all()->where('tm_name', $vName)->first() == null) {
+                    $decor = new TypeMaterialModel();
+                    $decor->tm_name = $vName;
+                    $decor->save();
+                    $vNewDecor = DB::table('type_material')->latest('id')->first();
+                    return $JSON->JSONsuccessArray('Create', 'New type material', $vNewDecor, 201);
+                } else {
+                    return $JSON->JSONerror('Назва декора: `' . $vName . '` вже існує', 501);
+                }
             } else {
 
                 $ts = TypeMaterialModel::find($vId);
                 if ($ts == null) {
                     return $JSON->JSONerror('Елемента з id: ' . $vId . ' не існує', 501);
                 }
-                $ts->update($request->all());
-                //dd($decor);
-                $vUpdateDecor = DB::table('type_material')->where('id', $vId)->get();
-                return $JSON->JSONsuccessArray('Update', 'Type material', $vUpdateDecor, 201);
+                if (TypeMaterialModel::all()->where('tm_name', $vName)->first() == null) {
+                    $ts->update($request->all());
+                    //dd($decor);
+                    $vUpdateDecor = DB::table('type_material')->where('id', $vId)->get();
+                    return $JSON->JSONsuccessArray('Update', 'Type material', $vUpdateDecor, 201);
+                } else {
+                    return $JSON->JSONerror('Назва декора: `' . $vName . '` вже існує', 501);
+                }
             }
 
         } catch (\Exception $e) {
@@ -59,7 +67,7 @@ class TypeMaterialController extends Controller
                 $decor = new TypeMaterialModel(); //model
                 return $JSON->JSONsuccessArray('Get  all', 'Decor', $decor::all(), 200);
             } else {
-                $GetTM = DB::table('type_material')->where('tm_name', 'like', "%" .$vName . "%")->get();
+                $GetTM = DB::table('type_material')->where('tm_name', 'like', "%" . $vName . "%")->get();
                 return $JSON->JSONsuccessArray('Get name by like ' . $vName . '',
                     'Decor',
                     $GetTM,

@@ -20,21 +20,31 @@ class DecorController extends Controller
             if ($vName == null) {
                 return $JSON->JSONerror('Нічого не передали або немає аргумента `decor_name`', 401);
             } else if ($vId == null || $vId == 0) {
-                $decor = new Decor();
-                $decor->decor_name = $vName;
-                $decor->save();
-                $vNewDecor = DB::table('decor')->latest('id')->first();
-                return $JSON->JSONsuccessArray('Create', 'New decor', $vNewDecor, 201);
+                if (Decor::all()->where('decor_name', $vName)->first() == null) {
+                    $decor = new Decor();
+                    $decor->decor_name = $vName;
+                    $decor->save();
+                    $vNewDecor = DB::table('decor')->latest('id')->first();
+                    return $JSON->JSONsuccessArray('Create', 'New decor', $vNewDecor, 201);
+                } else {
+                    return $JSON->JSONerror('Назва декора: `' . $vName . '` вже існує', 501);
+                }
             } else {
+
                 $decor = Decor::find($vId);
                 if ($decor == null) {
                     return $JSON->JSONerror('Елемента з id: ' . $vId . ' не існує', 501);
                 }
-                $decor->update($request->all());
-                $vUpdateDecor = DB::table('decor')->where('id', $vId)->get();
-                return $JSON->JSONsuccessArray('Update', 'Decor', $vUpdateDecor, 201);
+                if (Decor::all()->where('decor_name', $vName)->first() == null) {
+                    $decor->update($request->all());
+                    $vUpdateDecor = DB::table('decor')->where('id', $vId)->get();
+                    return $JSON->JSONsuccessArray('Update', 'Decor', $vUpdateDecor, 201);
+                } else {
+                    return $JSON->JSONerror('Назва декора: `' . $vName . '` вже існує', 501);
+                }
             }
-        } catch (\Exception $e) {
+        } catch
+        (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }
     }
