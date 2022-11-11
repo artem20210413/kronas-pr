@@ -60,10 +60,12 @@ class MaterialController extends Controller
             if ($vId == null && $vVendor_code == null && $vType_material_id == null && $vDecor_id == null && $vCell_id == null
                 && $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null && $vStorageCode == null) {
                 $material = new MaterialModel(); //model
-                return $JSON->JSONsuccessArray('Get  all', 'Material', $material::all(), 200);
+                //return $JSON->JSONsuccessArray('Get  all', 'Material', $material::all(), 200);
+                return $JSON->JSONsuccessArray('Get  all', 'Material', DB::select('CALL material_all()'), 200);
             } else {
 //                $m = MaterialModel::all();
                 $m = MaterialModel::where('id', '<>', 0);
+                //$m = DB::select('CALL material_all()');
 
                 foreach ($request->all() as $key => $req)
                     if ($key == 'length' || $key == 'width' || $key == 'thickness' || $key == 'created_at' || $key == 'updated_at')
