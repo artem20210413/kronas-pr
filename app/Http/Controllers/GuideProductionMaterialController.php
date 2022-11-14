@@ -12,7 +12,7 @@ class GuideProductionMaterialController extends Controller
         return view('production_material');
     }
 
-    public function decor(Request $request,JSONcontroller $JSON, DecorController $decor)
+    public function decor()
     {
         //$decor->DecorGet();
         $decor = new Decor();

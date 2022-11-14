@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\CellDeleteRequest;
 use App\Http\Requests\CellRequest;
 use App\Models\Cell;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 
 class CellController extends Controller
@@ -53,7 +51,7 @@ class CellController extends Controller
                     }
                 }
             }
-            $cellAll=DB::table('cell')->where('rack', $vRack)->latest('storey')->latest('row')->get();
+            $cellAll = DB::table('cell')->where('rack', $vRack)->latest('storey')->latest('row')->get();
             return $JSON->JSONsuccessArray('Update', 'New Cells', $cellAll, 201);
 
         } catch (\Exception $e) {
@@ -102,6 +100,7 @@ class CellController extends Controller
             return $JSON->JSONerror($e->getMessage(), 400);
         }
     }
+
     public function CellId(Cell $cell_id)
     {
         dd($cell_id);
@@ -116,7 +115,7 @@ class CellController extends Controller
                 return $JSON->JSONsuccessArray('get by id: `' . $vId . '`', 'Cells', $vCall, 401);
             } else if (($vRack = $request->get('rack')) != null) {
                 $vCall = DB::table('cell')->where('rack', $vRack)->get();
-               return $JSON->JSONsuccessArray('get by rack: `' . $vRack . '`', 'Cells', $vCall, 401);
+                return $JSON->JSONsuccessArray('get by rack: `' . $vRack . '`', 'Cells', $vCall, 401);
             } else {
                 return $JSON->JSONsuccessArray('all', 'Cells', Cell::all(), 401);
             }
