@@ -77,7 +77,6 @@ class CellController extends Controller
 
     public function CellDestroy(Request $request, JSONcontroller $JSON)
     {
-
         try {
 //            $vId = $request->get('id');
 //            $vRack = $request->get('rack');

@@ -28,7 +28,6 @@ class TypeMaterialController extends Controller
                     return $JSON->JSONerror('Назва декора: `' . $vName . '` вже існує', 501);
                 }
             } else {
-
                 $ts = TypeMaterialModel::find($vId);
                 if ($ts == null) {
                     return $JSON->JSONerror('Елемента з id: ' . $vId . ' не існує', 501);

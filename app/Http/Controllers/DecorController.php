@@ -18,7 +18,7 @@ class DecorController extends Controller
             $vId = $request->post('id');
             $vName = $request->post('decor_name');
             if ($vName == null) {
-                return $JSON->JSONerror('Нічого не передали або немає аргумента `decor_name`', 401);
+                return $JSON->JSONerror('Nothing passed or no `decor_name` argument', 401);
             } else if ($vId == null || $vId == 0) {
                 if (Decor::all()->where('decor_name', $vName)->first() == null) {
                     $decor = new Decor();
@@ -27,20 +27,20 @@ class DecorController extends Controller
                     $vNewDecor = DB::table('decor')->latest('id')->first();
                     return $JSON->JSONsuccessArray('Create', 'New decor', $vNewDecor, 201);
                 } else {
-                    return $JSON->JSONerror('Назва декора: `' . $vName . '` вже існує', 501);
+                    return $JSON->JSONerror('Decor name: `' . $vName . '` already exists', 405);
                 }
             } else {
 
                 $decor = Decor::find($vId);
                 if ($decor == null) {
-                    return $JSON->JSONerror('Елемента з id: ' . $vId . ' не існує', 501);
+                    return $JSON->JSONerror('Element with id: ' . $vId . ' does not exist', 405);
                 }
                 if (Decor::all()->where('decor_name', $vName)->first() == null) {
                     $decor->update($request->all());
                     $vUpdateDecor = DB::table('decor')->where('id', $vId)->get();
                     return $JSON->JSONsuccessArray('Update', 'Decor', $vUpdateDecor, 201);
                 } else {
-                    return $JSON->JSONerror('Назва декора: `' . $vName . '` вже існує', 501);
+                    return $JSON->JSONerror('Decor name: `' . $vName . '` already exists', 405);
                 }
             }
         } catch

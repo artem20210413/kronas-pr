@@ -11,7 +11,7 @@ class JSONcontroller extends Controller
     public function JSONerror($message, $status){
         return response()->json([
             "code" => $status,
-            'status' => 'fail',
+            'status' => 'Fail',
             'type' => 'error',
             'message' => $message
         ], $status); // 200
