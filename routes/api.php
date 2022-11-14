@@ -29,9 +29,9 @@ Route::put('v1/cell/update/{id}', function (Cell $cell) {
     return (new CellController)->update($cell);
 });
 
-Route::get('/users/{user}', function (User $user) {
-    return $user->email;
-});
+//Route::get('/users/{user}', function (User $user) {
+//    return $user->email;
+//});
 
 
 //Route::get('test/{part_1?}/{part_2?}',[DecorController::class, 'testURL']);//test

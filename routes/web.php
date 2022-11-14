@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuideProductionMaterialController;
+use App\Http\Controllers\Web\Decor\WebDecorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,16 +20,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/laravel', function () {
     return view('welcome');
 });
-
-Route::get('/', [GuideProductionMaterialController::class, 'production_material']);
-//Route::get('/', function (){
-//    return view('production_material');
-//});
+Route::get('/', function (){
+    return view('production_material');
+});
 
 Route::get('/cell', function (){
     return view('cell');
 });
-Route::get('/decor', [GuideProductionMaterialController::class, 'decor']);
+Route::get('/decor', [WebDecorController::class, 'DecorGet']);
 //Route::get('/decor', function (){
 //    return view('decor');
 //});
