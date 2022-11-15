@@ -29,7 +29,7 @@ class WebDecorController extends Controller
                     $vNewDecor = DB::table('decor')->latest('id')->first();
                     //return $JSON->JSONsuccessArray('Create', 'New decor', $vNewDecor, 201);
                 } else {
-                   // return $JSON->JSONerror('Decor name: `' . $vName . '` already exists', 405);
+                    // return $JSON->JSONerror('Decor name: `' . $vName . '` already exists', 405);
                 }
             } else {
 
@@ -47,9 +47,16 @@ class WebDecorController extends Controller
             }
         } catch
         (\Exception $e) {
-           // return $JSON->JSONerror($e->getMessage(), 501);
+            // return $JSON->JSONerror($e->getMessage(), 501);
         }
     }
+
+    public function DecorWebCU(int $id)
+    {
+        return view('decor_CU', ['id' => $id]);
+
+    }
+
 
     public function DecorGet(Request $request)//, JSONcontroller $JSON
     {
@@ -59,8 +66,8 @@ class WebDecorController extends Controller
             $vId = $request->get('id');
             if ($vName == null && $vId == null) {
                 $decor = new Decor(); //model
-                return view('decor', ['decor' => $decor::all()]);
-               // return $JSON->JSONsuccessArray('Get  all', 'Decor', $decor::all(), 200);
+                return view('decor', ['decor' => $decor::all(),'name' => $vName]);
+                // return $JSON->JSONsuccessArray('Get  all', 'Decor', $decor::all(), 200);
             } else {
                 //$GetTM = "";
                 if ($vName == null) {
@@ -69,12 +76,12 @@ class WebDecorController extends Controller
                     $GetTM = DB::table('decor')->where('decor_name', 'like', "%" . $vName . "%")->get();
                 }
 
-                return view('decor', ['decor' => $GetTM]);
+                return view('decor', ['decor' => $GetTM, 'name' => $vName]);
             }
 
         } catch (\Exception $e) {
 
-           // return $JSON->JSONerror($e->getMessage(), 501);
+            // return $JSON->JSONerror($e->getMessage(), 501);
         }
     }
 
@@ -85,14 +92,14 @@ class WebDecorController extends Controller
             if ($vId != null) {
                 $res = Decor::destroy($vId);
                 if ($res != 0) {
-                   // return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);
+                    // return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);
                 } else {
                     echo 1;//return $JSON->JSONerror('Елемент з id=' . $vId . ' не видален, він відсутній або сталася помилка', 401);
                 }
             } //else return $JSON->JSONerror('Відсутнє обов`язкове поле `id`', 401);
 
         } catch (\Exception $e) {
-           // return $JSON->JSONerror($e->getMessage(), 501);
+            // return $JSON->JSONerror($e->getMessage(), 501);
         }
     }
 }

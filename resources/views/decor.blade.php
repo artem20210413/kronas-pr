@@ -5,19 +5,25 @@
 @endsection
 @section('body')
     <div class="row justify-content-md-center text-center">
-        <div class="col-md-8">
-            <form class="col-12 mt-3">
-                <input class="form-control" type="text" name="decor_name">
-                <button class="w-100 btn btn-primary btn mt-3" type="submit">Search</button>
+        <div class="col-md">
+            <form class="mt-3">
+                <div class="row">
+                    <div class="col-10">
+                        <input class="form-control" type="text" name="decor_name" value="{{$name}}">
+                    </div>
+                    <div class="col-2">
+                        <button class="w-100 btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
             </form>
-
-            <p class="mt-4">Decor</p>
-            <form class="needs-validation" id="setdecor"><!--action="api/v1/decor" method="post"-->
-                @csrf
-                <input placeholder="id" class="form-control" type="number" name="id">
-                <input placeholder="decor_name" class="form-control mt-2" type="text" name="decor_name">
-                <button class="w-100 btn btn-primary btn mt-3" type="submit">Add</button>
-            </form>
+            <!--
+                        <p class="mt-4">Decor</p>
+                        <form class="needs-validation" id="setdecor">
+                            csrf
+                            <input placeholder="id" class="form-control" type="number" name="id">
+                            <input placeholder="decor_name" class="form-control mt-2" type="text" name="decor_name">
+                            <button class="w-100 btn btn-primary btn mt-3" type="submit">Add</button>
+                        </form>-->
         </div>
         <table class="table mt-4">
             <tr class="thead-dark">
@@ -30,7 +36,7 @@
                     <form action="{{ url('/decor', ['id' => $el->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <td >{{$el->id}}</td>
+                        <td>{{$el->id}}</td>
                         <td>{{$el->decor_name}}</td>
 
                         <td style="max-width: 50px">
