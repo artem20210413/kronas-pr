@@ -26,14 +26,14 @@
             </tr>
 
             @foreach($decor as $el)
-                <tr>
-                    <form action="" method="get">
-                        <td>{{$el->id}}</td>
+                <tr id="{{$el->id}}">
+                    <form action="{{ url('/decor', ['id' => $el->id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <td >{{$el->id}}</td>
                         <td>{{$el->decor_name}}</td>
-                        <td style="max-width: 40px">
-                            <button type="submit" class="w-100 btn btn-warning">edit</button>
-                        </td>
-                        <td style="max-width: 40px">
+
+                        <td style="max-width: 50px">
                             <button type="submit" class="w-100 btn btn-danger">delete</button>
                         </td>
                     </form>
@@ -49,7 +49,6 @@
     ?>
     <script>
 
-        console.log("+");
         $("#setdecor").submit(function (e) {
             e.preventDefault();
 
@@ -64,7 +63,7 @@
                     console.log(response, u);
                     //location.reload();
                     $.alert({
-                        theme: 'black',
+                        //theme: 'black',
                         type: 'green',
                         draggable: false,
                         title: response.status,
@@ -74,7 +73,6 @@
                         }
                     });
                     // location.reload();
-
                 },
                 error: function (response, u, v) {
                     $.alert({

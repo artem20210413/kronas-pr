@@ -78,10 +78,10 @@ class WebDecorController extends Controller
         }
     }
 
-    public function DecorDestroy(DecorRequest $request)//, JSONcontroller $JSON
+    public function DecorDestroy(int $id)//, JSONcontroller $JSON
     {
         try {
-            $vId = $request->post('id');
+            $vId = $id;
             if ($vId != null) {
                 $res = Decor::destroy($vId);
                 if ($res != 0) {
