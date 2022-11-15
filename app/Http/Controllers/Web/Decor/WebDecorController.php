@@ -20,16 +20,35 @@ class WebDecorController extends Controller
             $vId = $request->post('id');
             $vName = $request->post('decor_name');
             if ($vName == null) {
-                //return $JSON->JSONerror('Nothing passed or no `decor_name` argument', 401);
+               return response()->json([
+                    "code" => 401,
+                    'status' => 'Fail',
+                    'type' => 'error',
+                    'message' => 'Nothing passed or no `decor_name` argument'
+                ], 401);
+                /// 200; //return $JSON->JSONerror('Nothing passed or no `decor_name` argument', 401);
             } else if ($vId == null || $vId == 0) {
                 if (Decor::all()->where('decor_name', $vName)->first() == null) {
                     $decor = new Decor();
                     $decor->decor_name = $vName;
                     $decor->save();
                     $vNewDecor = DB::table('decor')->latest('id')->first();
+
+                        return response()->json([
+                            "code" => 201,
+                            'status' => 'success',
+                            'message' => [
+                                'status' => 'Create'
+                            ],
+                        ],201);
                     //return $JSON->JSONsuccessArray('Create', 'New decor', $vNewDecor, 201);
                 } else {
-                    // return $JSON->JSONerror('Decor name: `' . $vName . '` already exists', 405);
+                    return response()->json([
+                        "code" => 401,
+                        'status' => 'Fail',
+                        'type' => 'error',
+                        'message' => 'Decor name: `' . $vName . '` already exists'
+                    ], 401);  // return $JSON->JSONerror('Decor name: `' . $vName . '` already exists', 405);
                 }
             } else {
 
@@ -51,9 +70,9 @@ class WebDecorController extends Controller
         }
     }
 
-    public function DecorWebCU(int $id)
+    public function DecorWebCU(int $id, string $decorName)
     {
-        return view('decor_CU', ['id' => $id]);
+        return view('decor_CU', ['id' => $id, 'decorName' => $decorName]);
 
     }
 
@@ -92,11 +111,13 @@ class WebDecorController extends Controller
             if ($vId != null) {
                 $res = Decor::destroy($vId);
                 if ($res != 0) {
-                    // return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);
+                   return redirect("/decor");
+                    //return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);
                 } else {
-                    echo 1;//return $JSON->JSONerror('Елемент з id=' . $vId . ' не видален, він відсутній або сталася помилка', 401);
+                    return [false,'Element with id: ' . $vId . 'not deleted, missing or an error occurred'];//return $JSON->JSONerror('Елемент з id=' . $vId . ' не видален, він відсутній або сталася помилка', 401);
                 }
-            } //else return $JSON->JSONerror('Відсутнє обов`язкове поле `id`', 401);
+            } else return [false,'Mandatory field `id` is missing'];
+                //return $JSON->JSONerror('Відсутнє обов`язкове поле `id`', 401);
 
         } catch (\Exception $e) {
             // return $JSON->JSONerror($e->getMessage(), 501);

@@ -5,17 +5,23 @@
 @endsection
 @section('body')
     <div class="row justify-content-md-center text-center">
-        <div class="col-md">
+        <div class="col-md-12">
             <form class="mt-3">
                 <div class="row">
                     <div class="col-10">
                         <input class="form-control" type="text" name="decor_name" value="{{$name}}">
                     </div>
-                    <div class="col-2">
+
+                    <div class="col-2 ">
                         <button class="w-100 btn btn-primary" type="submit">Search</button>
                     </div>
                 </div>
             </form>
+            <div class=" mt-2">
+                <a class="w-100 btn btn-success" href="/decor/0/Decor name">Create new decor </a>
+
+
+            </div>
             <!--
                         <p class="mt-4">Decor</p>
                         <form class="needs-validation" id="setdecor">
@@ -40,7 +46,10 @@
                         <td>{{$el->decor_name}}</td>
 
                         <td style="max-width: 50px">
-                            <button type="submit" class="w-100 btn btn-danger">delete</button>
+                            <a class="w-100 btn btn-warning" href="/decor/{{$el->id}}/{{$el->decor_name}}">Update</a>
+                        </td>
+                        <td style="max-width: 50px">
+                            <button type="submit" class="w-100 btn btn-danger">Delete</button>
                         </td>
                     </form>
                 </tr>
@@ -55,15 +64,15 @@
     ?>
     <script>
 
-        $("#setdecor").submit(function (e) {
+        $("#f").submit(function (e) {
             e.preventDefault();
 
             const data = $(this).serializeArray();
 
             $.ajax({
-                type: "POST",
-                url: '/api/v1/decor',
-                data: data,
+                type: "DELETE",
+                url: '/decor',
+                data: 'id'= $el->id,
 
                 success: function (response, u) {
                     console.log(response, u);

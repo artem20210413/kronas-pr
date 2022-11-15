@@ -29,7 +29,8 @@ Route::get('/cell', function (){
 });
 
 Route::get('/decor', [WebDecorController::class, 'DecorGet']);
-Route::get('/decor/{id}', [WebDecorController::class, 'DecorWebCU']);
+Route::get('/decor/{id}/{decorName}', [WebDecorController::class, 'DecorWebCU']);
+Route::post('/decor', [WebDecorController::class, 'DecorCreateAndUpdate']);
 Route::delete('/decor/{id}', [WebDecorController::class, 'DecorDestroy']);
 
 //Route::get('/decor', function (){
