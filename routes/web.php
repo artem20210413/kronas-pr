@@ -30,12 +30,14 @@ Route::get('/', function (){
 //});
 
 //Route::get('/cell', [WebCellController::class, 'dd']);
+
+Route::get('/cell/update', [WebCellController::class, 'ViewCellUpdate']);
 Route::get('/cell', [WebCellController::class, 'CellGet']);
+Route::post('/cell', [WebCellController::class, 'CellUpdate']);
 
 
 
 Route::get('/decor', [WebDecorController::class, 'DecorGet']);
-Route::get('/decor/{id}/{decorName}', [WebDecorController::class, 'DecorWebCU']);
 Route::get('/decor/{id}/{decorName}', [WebDecorController::class, 'DecorWebCU']);
 Route::post('/decor', [WebDecorController::class, 'DecorCreateAndUpdate']);
 Route::delete('/decor/{id}', [WebDecorController::class, 'DecorDestroy']);

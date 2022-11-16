@@ -146,23 +146,12 @@ class CellController extends Controller
 //        return Cell::create($request->all());
     }
 
-    public
-    function testURL(Request $request)
-    {
-        // Get the current URL without the query string...
-        //echo url()->current();
-        // Get the current URL including the query string...
-        //echo url()->full();
 
-        dd(URL::current());
-
-    }
-
-    public
-    function create(CellRequest $request)
-    {
-        return Cell::create($request->all());
-    }
+//    public
+//    function create(CellRequest $request)
+//    {
+//        return Cell::create($request->all());
+//    }
 
 
     /**
@@ -172,14 +161,14 @@ class CellController extends Controller
      * @param int $id
      * @return Model|Cell|Cell[]
      */
-    public
-    function update(Cell $cell): Cell|array|Model
-    {
-        dd($cell->get());
+//    public
+//    function update(Cell $cell): Cell|array|Model
+//    {
+//        dd($cell->get());
 //        $service = Cell::find($id);
-        $service->update($request->all());
-        return $service;
-    }
+//        $service->update($request->all());
+//        return $service;
+//    }
 
 
     /**

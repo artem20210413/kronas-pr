@@ -25,9 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('v1/cell/delete', [CellController::class, 'destroy']);
-Route::put('v1/cell/update/{id}', function (Cell $cell) {
-    return (new CellController)->update($cell);
-});
+//Route::put('v1/cell/update/{id}', function (Cell $cell) {
+//    return (new CellController)->update($cell);
+//});
 
 //Route::get('/users/{user}', function (User $user) {
 //    return $user->email;
