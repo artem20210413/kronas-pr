@@ -76,5 +76,32 @@ class WebCellController extends Controller
             return (new JSONcontroller)->JSONerror($e->getMessage(), 501);
         }
     }
+    public function CellDestroy(Request $request)
+    {
+//        $vRack = $request->post('rack');
+//        $r = Cell::whereRack($vRack);
+//        $res = $r->delete();
+//        dd($res);
+//        dd($r->count());
+        try {
+//            $vId = $request->get('id');
+//            $vRack = $request->get('rack');
+            $vId = $request->post('id');
+            $vRack = $request->post('rack');
+//            $cell = new Cell();
+            if ($vId != null) {
+                Cell::destroy($vId);
+               return (new JSONcontroller)->SONsuccess('Destroy element by id = ' . $vId, 201);
+            } else if ($vRack != null) {
 
+                $vAllCell = Cell::whereRack($request->post('rack'));
+                $count = $vAllCell->delete();
+               return (new JSONcontroller)->JSONsuccess('Destroy array by rack = ' . $vRack . '. delete ' . $count . ' elements.', 201);
+            } else {
+               return (new JSONcontroller)->JSONerror('Нічого не передали або немає аргументів `id` або `rack`', 401);
+            }
+        } catch (\Exception $e) {
+            return (new JSONcontroller)->JSONerror($e->getMessage(), 400);
+        }
+    }
 }

@@ -35,6 +35,7 @@ Route::get('/cell/update', [WebCellController::class, 'ViewCellUpdate']);
 Route::get('/cell/rack/all', [WebCellController::class, 'GetCellRackAll']);
 Route::get('/cell', [WebCellController::class, 'CellGet']);
 Route::post('/cell', [WebCellController::class, 'CellUpdate']);
+Route::delete('/cell', [WebCellController::class, 'CellDestroy']);
 
 
 
