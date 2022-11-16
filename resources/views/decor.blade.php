@@ -11,26 +11,17 @@
                     <div class="col-10">
                         <input class="form-control" type="text" name="decor_name" value="{{$name}}">
                     </div>
-
                     <div class="col-2 ">
                         <button class="w-100 btn btn-primary" type="submit">Search</button>
                     </div>
                 </div>
             </form>
+
             <div class=" mt-2">
                 <a class="w-100 btn btn-success" href="/decor/0/Decor name">Create new decor </a>
-
-
             </div>
-            <!--
-                        <p class="mt-4">Decor</p>
-                        <form class="needs-validation" id="setdecor">
-                            csrf
-                            <input placeholder="id" class="form-control" type="number" name="id">
-                            <input placeholder="decor_name" class="form-control mt-2" type="text" name="decor_name">
-                            <button class="w-100 btn btn-primary btn mt-3" type="submit">Add</button>
-                        </form>-->
         </div>
+
         <table class="table mt-4">
             <tr class="thead-dark">
                 <th scope="col">Id</th>
@@ -72,7 +63,7 @@
             $.ajax({
                 type: "DELETE",
                 url: '/decor',
-                data: 'id'= $el->id,
+                data: data,
 
                 success: function (response, u) {
                     console.log(response, u);

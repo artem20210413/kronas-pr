@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuideProductionMaterialController;
+use App\Http\Controllers\Web\Decor\WebCellController;
 use App\Http\Controllers\Web\Decor\WebDecorController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,11 +25,17 @@ Route::get('/', function (){
     return view('production_material');
 });
 
-Route::get('/cell', function (){
-    return view('cell');
-});
+//Route::get('/cell', function (){
+//    return view('cell');
+//});
+
+//Route::get('/cell', [WebCellController::class, 'dd']);
+Route::get('/cell', [WebCellController::class, 'CellGet']);
+
+
 
 Route::get('/decor', [WebDecorController::class, 'DecorGet']);
+Route::get('/decor/{id}/{decorName}', [WebDecorController::class, 'DecorWebCU']);
 Route::get('/decor/{id}/{decorName}', [WebDecorController::class, 'DecorWebCU']);
 Route::post('/decor', [WebDecorController::class, 'DecorCreateAndUpdate']);
 Route::delete('/decor/{id}', [WebDecorController::class, 'DecorDestroy']);

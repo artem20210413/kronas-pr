@@ -20,7 +20,7 @@ class WebDecorController extends Controller
             $vId = $request->post('id');
             $vName = $request->post('decor_name');
             if ($vName == null) {
-               return response()->json([
+                return response()->json([
                     "code" => 401,
                     'status' => 'Fail',
                     'type' => 'error',
@@ -34,13 +34,13 @@ class WebDecorController extends Controller
                     $decor->save();
                     $vNewDecor = DB::table('decor')->latest('id')->first();
 
-                        return response()->json([
-                            "code" => 201,
-                            'status' => 'success',
-                            'message' => [
-                                'status' => 'Create'
-                            ],
-                        ],201);
+                    return response()->json([
+                        "code" => 201,
+                        'status' => 'success',
+                        'message' => [
+                            'status' => 'Create'
+                        ],
+                    ], 201);
                     //return $JSON->JSONsuccessArray('Create', 'New decor', $vNewDecor, 201);
                 } else {
                     return response()->json([
@@ -85,7 +85,7 @@ class WebDecorController extends Controller
             $vId = $request->get('id');
             if ($vName == null && $vId == null) {
                 $decor = new Decor(); //model
-                return view('decor', ['decor' => $decor::all(),'name' => $vName]);
+                return view('decor', ['decor' => $decor::all(), 'name' => $vName]);
                 // return $JSON->JSONsuccessArray('Get  all', 'Decor', $decor::all(), 200);
             } else {
                 //$GetTM = "";
@@ -111,13 +111,13 @@ class WebDecorController extends Controller
             if ($vId != null) {
                 $res = Decor::destroy($vId);
                 if ($res != 0) {
-                   return redirect("/decor");
+                    return redirect("/decor");
                     //return $JSON->JSONsuccess('Успішно видалений елемент з id=' . $vId, 200);
                 } else {
-                    return [false,'Element with id: ' . $vId . 'not deleted, missing or an error occurred'];//return $JSON->JSONerror('Елемент з id=' . $vId . ' не видален, він відсутній або сталася помилка', 401);
+                    return [false, 'Element with id: ' . $vId . 'not deleted, missing or an error occurred'];//return $JSON->JSONerror('Елемент з id=' . $vId . ' не видален, він відсутній або сталася помилка', 401);
                 }
-            } else return [false,'Mandatory field `id` is missing'];
-                //return $JSON->JSONerror('Відсутнє обов`язкове поле `id`', 401);
+            } else return [false, 'Mandatory field `id` is missing'];
+            //return $JSON->JSONerror('Відсутнє обов`язкове поле `id`', 401);
 
         } catch (\Exception $e) {
             // return $JSON->JSONerror($e->getMessage(), 501);

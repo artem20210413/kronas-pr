@@ -101,10 +101,7 @@ class CellController extends Controller
         }
     }
 
-    public function CellId(Cell $cell_id)
-    {
-        dd($cell_id);
-    }
+
 
     public function CellGet(Request $request, JSONcontroller $JSON)
     {
@@ -112,12 +109,12 @@ class CellController extends Controller
             if ($vId = $request->get('id') != null) {
 
                 $vCall = DB::table('cell')->where('id', $vId)->get();
-                return $JSON->JSONsuccessArray('get by id: `' . $vId . '`', 'Cells', $vCall, 401);
+                return $JSON->JSONsuccessArray('get by id: `' . $vId . '`', 'Cells', $vCall, 200);
             } else if (($vRack = $request->get('rack')) != null) {
                 $vCall = DB::table('cell')->where('rack', $vRack)->get();
-                return $JSON->JSONsuccessArray('get by rack: `' . $vRack . '`', 'Cells', $vCall, 401);
+                return $JSON->JSONsuccessArray('get by rack: `' . $vRack . '`', 'Cells', $vCall, 200);
             } else {
-                return $JSON->JSONsuccessArray('all', 'Cells', Cell::all(), 401);
+                return $JSON->JSONsuccessArray('all', 'Cells', Cell::all(), 200);
             }
 //            $Cell = new Cell();
 //            try {

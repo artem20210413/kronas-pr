@@ -8,12 +8,13 @@
         <div class="col-md-8">
 
 
-            <p class="mt-4">Decor</p>
+            <p class="mt-4">Cell</p>
             <form class="needs-validation" id="setdecor"><!--action="api/v1/decor" method="post"-->
                 @csrf
                 <input placeholder="id" class="form-control" type="number" name="id" value="{{$id}}">
-                <input autofocus placeholder="Decor name" class="form-control mt-2" type="text" name="decor_name"
-                       value="{{$decorName}}">
+                <input autofocus placeholder="A" class="form-control mt-2" type="text" name="rack" value="{{$rack}}">
+                <input autofocus placeholder="2" class="form-control mt-2" type="text" name="rack" value="{{$storey}}">
+                <input autofocus placeholder="3" class="form-control mt-2" type="text" name="row" value="{{$row}}">
                 <div class="row">
                     <button class="col-6 btn btn-dark btn mt-3" onclick="history.back()">Go Back</button>
                     <button class= "col-6  btn btn-primary btn mt-3" type="submit">Save</button>
