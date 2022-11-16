@@ -13,7 +13,7 @@
                 @csrf
                 <input placeholder="id" class="form-control" type="number" name="id" value="{{$id}}">
                 <input autofocus placeholder="Decor name" class="form-control mt-2" type="text" name="decor_name" value="{{$decorName}}">
-                <button class="w-100 btn btn-primary btn mt-3" type="submit">Add</button>
+                <button class="w-100 btn btn-primary btn mt-3" type="submit">Save</button>
             </form>
 
         </div>
