@@ -13,8 +13,8 @@
                 @csrf
                 <!--<input placeholder="id" class="form-control" type="number" name="id" value="">-->
                 <input autofocus placeholder="A" class="form-control mt-2" type="text" name="rack" value="">
-                <input autofocus placeholder="2" class="form-control mt-2" type="text" name="storey" value="">
-                <input autofocus placeholder="3" class="form-control mt-2" type="text" name="row" value="">
+                <input autofocus placeholder="2" class="form-control mt-2" type="number" name="storey" value="">
+                <input autofocus placeholder="3" class="form-control mt-2" type="number" name="row" value="">
                 <div class="row">
                     <button class="col-6 btn btn-dark btn mt-3" onclick="history.back()">Go Back</button>
                     <button class= "col-6  btn btn-primary btn mt-3" type="submit">Save</button>
@@ -38,8 +38,8 @@
                 data: data,
 
                 success: function (response) {
-                    console.log(response);
-                    //window.location.href = "/cell?rack=" . response.responseText;
+                    //console.log(response.rack);
+                    window.location.href = "/cell?rack=" + response.rack;
                     //window.history.back();
                 },
                 error: function (response, u, v) {

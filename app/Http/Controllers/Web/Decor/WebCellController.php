@@ -19,26 +19,28 @@ class WebCellController extends Controller
         return view('cell_CU', ['create' => $request->get('create')]);
     }
 
+    public function GetCellRackAll()
+    {
+        return Cell::distinct()->get('rack');
+    }
+
     public function CellGet(Request $request)
     {
         try {
             if ($vId = $request->get('id') != null) {
                 $vCall = DB::table('cell')->where('id', $vId)->get();
-                return view('cell', ['cell' => $vCall, 'rack' => $request->rack]);
-                // return JSONcontroller::JSONsuccessArray('get by id: `' . $vId . '`', 'Cells', $vCall, 200);
-            } else if (($vRack = $request->get('rack')) != null || $vRack != " ") {
+            } else if (($vRack = $request->get('rack')) != null || $request->get('rack') != "") {
                 $vCall = DB::table('cell')->where('rack', $vRack)->get();
-                return view('cell', ['cell' => $vCall, 'rack' => $request->rack]);
-                // return JSONcontroller::JSONsuccessArray('get by rack: `' . $vRack . '`', 'Cells', $vCall, 200);
             } else {
-                //return $vRack;
-                return view('cell', ['cell' => Cell::all(), 'rack' => $request->rack]);
-                //return ['cell' => Cell::all(), 'rack' => $request->rack];
+                $vCall = Cell::all();
             }
+            return view('cell', ['cell' => $vCall, 'rack' => $request->rack, 'allRack' => Cell::distinct()->get('rack')]);
         } catch (\Exception $e) {
             return (new JSONcontroller)->JSONerror($e->getMessage(), 400);
         }
     }
+
+
     public function CellUpdate(Request $request)
     {
         try {
@@ -67,7 +69,8 @@ class WebCellController extends Controller
                 }
             }
             $cellAll = DB::table('cell')->where('rack', $vRack)->latest('storey')->latest('row')->get();
-           return view('cell',['cell'=>$cellAll, 'rack'=> $vRack]);
+            return ['cell' => $cellAll, 'rack' => $vRack];
+            // return view('cell', ['cell' => $cellAll, 'rack' => $vRack]);
             // return JSONcontroller::JSONsuccessArray('Update', 'New Cells', $cellAll, 201);
         } catch (\Exception $e) {
             return (new JSONcontroller)->JSONerror($e->getMessage(), 501);

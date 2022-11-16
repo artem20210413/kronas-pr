@@ -7,13 +7,17 @@
 
     <div class="row justify-content-md-center text-center">
         <div class="col-md-12">
-            <form method="get" action="/cell" class="mt-3">
+
+            <form method="get" action="/cell" class="mt-3" id="rack_form">
                     <div class="row">
-                        <div class="col-10">
-                            <input class="form-control" type="text" name="rack" value="{{$rack}}">
-                        </div>
-                        <div class="col-2 ">
-                            <button class="w-100 btn btn-primary" type="submit">Search</button>
+
+                        <div class="col-md-2 offset-md-5">
+                            <select class="form-control" type="select" name="rack" id="rack_select">
+                                <option value=" ">all</option>
+                                @foreach($allRack as $el)
+                                    <option @if($el->rack == $rack)selected @endif value="{{$el->rack}}">{{$el->rack}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </form>
@@ -80,6 +84,10 @@
                     });
                 }
             });
+        });
+
+        $("#rack_select").on("change", function () {
+            $("#rack_form").submit();
         });
     </script>
 @endsection

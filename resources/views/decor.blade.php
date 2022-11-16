@@ -9,7 +9,7 @@
             <form class="mt-3">
                 <div class="row">
                     <div class="col-10">
-                        <input class="form-control" type="text" name="decor_name" value="{{$name}}">
+                        <input class="form-control" type="text" id="decor_name" name="decor_name" onkeyup="myFunction()" value="{{$name}}">
                     </div>
                     <div class="col-2 ">
                         <button class="w-100 btn btn-primary" type="submit">Search</button>
@@ -22,10 +22,11 @@
             </div>
         </div>
 
-        <table class="table mt-4">
+        <table class="table mt-4" id="decor_table">
             <tr class="thead-dark">
                 <th scope="col">Id</th>
                 <th scope="col">Decor name</th>
+                <th scope="col" colspan="2">Actions</th>
             </tr>
 
             @foreach($decor as $el)
@@ -90,6 +91,24 @@
                 }
             });
         });
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("decor_name");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("decor_table");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
     </script>
 
 @endsection
