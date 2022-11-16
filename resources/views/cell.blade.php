@@ -9,18 +9,19 @@
         <div class="col-md-12">
 
             <form method="get" action="/cell" class="mt-3" id="rack_form">
-                    <div class="row">
+                <div class="row">
 
-                        <div class="col-md-2 offset-md-5">
-                            <select class="form-control" type="select" name="rack" id="rack_select">
-                                <option value=" ">all</option>
-                                @foreach($allRack as $el)
-                                    <option @if($el->rack == $rack)selected @endif value="{{$el->rack}}">{{$el->rack}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="mb-3 col-md-2 offset-md-5">
+                        <select class="form-control" type="select" name="rack" id="rack_select">
+                            <option value="">all</option>
+                            @foreach($allRack as $el)
+                                <option @if($el->rack == $rack)selected
+                                        @endif value="{{$el->rack}}">{{$el->rack}}</option>
+                            @endforeach
+                        </select>
                     </div>
-                </form>
+                </div>
+            </form>
 
             <div class=" mt-2">
                 <a class="w-100 btn btn-success" href="/cell/update">Create or update cell </a>
@@ -43,11 +44,7 @@
         </table>
 
     </div>
-    <?php
-    //    foreach ()
-    //dd(\App\Models\Decor::all())
-    //dd($GLOBALS);
-    ?>
+
     <script>
 
         $("#f").submit(function (e) {
@@ -73,7 +70,6 @@
                             location.reload();
                         }
                     });
-                    // location.reload();
                 },
                 error: function (response, u, v) {
                     $.alert({

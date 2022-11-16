@@ -47,8 +47,8 @@ class WebCellController extends Controller
             $vRack = $request->post('rack');
             $vStorey = $request->post('storey');
             $vRow = $request->post('row');
-            if ($vRack == null || $vStorey == null || $vRow == null) {
-                return (new JSONcontroller)->JSONerror('Нічого не передали або немає аргументів `rack`,`storey`,`row`', 401);
+            if ($vRack == null || $vStorey == null || $vStorey <=0 || $vRow == null || $vRow <=0) {
+                return (new JSONcontroller)->JSONerror('Нічого не передали або значення від`ємне', 401); //немає аргументів `rack`,`storey`,`row`
             }
             $vAllCell = DB::table('cell')->where('rack', $vRack)->latest('storey')->latest('row')->get();
             foreach ($vAllCell as $cell) {

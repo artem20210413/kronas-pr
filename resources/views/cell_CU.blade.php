@@ -11,13 +11,18 @@
             <p class="mt-4">Cell</p>
             <form class="needs-validation" id="cell">
                 @csrf
+                    <div class="mb-3 col-4 offset-4">
                 <!--<input placeholder="id" class="form-control" type="number" name="id" value="">-->
                 <input autofocus placeholder="A" class="form-control mt-2" type="text" name="rack" value="">
                 <input autofocus placeholder="2" class="form-control mt-2" type="number" name="storey" value="">
                 <input autofocus placeholder="3" class="form-control mt-2" type="number" name="row" value="">
+                    </div>
                 <div class="row">
-                    <button class="col-6 btn btn-dark btn mt-3" onclick="history.back()">Go Back</button>
-                    <button class= "col-6  btn btn-primary btn mt-3" type="submit">Save</button>
+                    <div class="col-4"> <button class=" w-100 btn btn-dark btn mt-3" onclick="history.back()">Go Back</button>  </div>
+                    <div class="col-4">  <button class= " w-100 btn btn-primary btn mt-3" type="submit">Save</button> </div>
+                    <div class="col-4">  <button class= " w-100 btn btn-danger btn mt-3" type="button">Delete</button>  </div>
+
+
                 </div>
             </form>
 
