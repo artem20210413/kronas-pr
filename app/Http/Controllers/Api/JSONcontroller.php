@@ -13,7 +13,7 @@ class JSONcontroller extends Controller
             'status' => 'Fail',
             'type' => 'error',
             'message' => $message
-        ], $status); // 200
+        ], $status);
     }
     public function JSONsuccess($message, $status){
         return response()->json([

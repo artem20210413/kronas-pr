@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CellController;
 use App\Http\Controllers\Api\StoryMaterialController;
 use App\Http\Controllers\Api\TypeMaterialController;
 use App\Http\Controllers\Api\MaterialController;
+use App\Http\Middleware\EnsureTokenIsValid;
 use App\Models\Cell;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

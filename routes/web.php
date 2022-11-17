@@ -3,6 +3,7 @@
 use App\Http\Controllers\GuideProductionMaterialController;
 use App\Http\Controllers\Web\Decor\WebCellController;
 use App\Http\Controllers\Web\Decor\WebDecorController;
+use App\Http\Controllers\Web\Decor\WebStoryMaterialController;
 use App\Http\Controllers\Web\Decor\WebTypeMaterialController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,7 +60,7 @@ Route::delete('/type_material/{id}', [WebTypeMaterialController::class, 'TypeMat
 
 
 
-
-Route::get('/story_material', function (){
-    return view('story_material');
-});
+Route::get('/story_material', [WebStoryMaterialController::class, 'StoryMaterialGet']);
+//Route::get('/story_material', function (){
+//    return view('story_material');
+//});
