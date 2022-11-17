@@ -86,12 +86,14 @@ class CellController extends Controller
                 Cell::destroy($vId);
                 return $JSON->JSONsuccess('Destroy element by id = ' . $vId, 201);
             } else if ($vRack != null) {
-                $vAllCell = DB::table('cell')->where('rack', $vRack)->get();
-                $count = 0;
-                foreach ($vAllCell as $cell) {
-                    Cell::destroy($cell->id);
-                    $count++;
-                }
+                $vAllCell = Cell::whereRack($request->post('rack'));
+                $count = $vAllCell->delete();
+//                $vAllCell = DB::table('cell')->where('rack', $vRack)->get();
+//                $count = 0;
+//                foreach ($vAllCell as $cell) {
+//                    Cell::destroy($cell->id);
+//                    $count++;
+//                }
                 return $JSON->JSONsuccess('Destroy array by rack = ' . $vRack . '. delete ' . $count . ' elements.', 201);
             } else {
                 return $JSON->JSONerror('Нічого не передали або немає аргументів `id` або `rack`', 401);
@@ -100,7 +102,6 @@ class CellController extends Controller
             return $JSON->JSONerror($e->getMessage(), 400);
         }
     }
-
 
 
     public function CellGet(Request $request, JSONcontroller $JSON)

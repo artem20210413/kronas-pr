@@ -10,12 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
 use PhpParser\ErrorHandler\Collecting;
 use Carbon\Carbon;
 
 class MaterialController extends Controller
 {
+
+
+
     function empty($string): string
     {
         if ($string != null)
@@ -24,7 +28,8 @@ class MaterialController extends Controller
             return '';
     }
 
-    public function GG(Request $request){
+    public function GG(Request $request)
+    {
         //dd(MaterialAllModel::cell());
         dd(DB::select('CALL material_decor(' . $request->get('id') . ')'));
 
@@ -123,10 +128,39 @@ class MaterialController extends Controller
         }
     }
 
+//    protected function validToken($Token)
+//    {
+//
+//        //dd($Token);
+//        $res = Http::withHeaders([
+//            'Content-Type' => 'application/json',
+//            'Accept' => 'application/json',
+//            'Authorization' => $Token,
+//
+//        ])->post('https://auth.kronas.com.ua/api/v1/my/roles');
+//        if ($res->status() == 200)
+//            return true;
+//        else return false;
+//
+////    $client = new GuzzleHttp\Client();
+////    $res = $client->request('GET', 'https://auth.kronas.com.ua/api/v1/my/roles', [
+////        'Content-Type' => ['user', 'pass']
+////    ]);
+////        return false;
+//    }
 
     public function MaterialPost(Request $request, JSONcontroller $JSON, StoryMaterialController $storyMaterial)
     {
+        //$this->validToken($request->header('Authorization'));
+
+
         try {
+//            Authenticate by token
+            if (!$this->validToken($request)) {
+                return (new JSONcontroller())->JSONerror("unauthorized", 401);
+            }
+
+//            $this->validToken($request);
 
             $vId = $request->post('id');
             $vVendor_code = $request->get('vendor_code');
@@ -186,6 +220,10 @@ class MaterialController extends Controller
             } else {
                 return $JSON->JSONerror('Обов`язкове поле `code_user` не існує або порожне', 401);
             }
+//            }
+//            else{
+//                return $JSON->JSONerror("unauthorized", 401);
+//            }
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }
