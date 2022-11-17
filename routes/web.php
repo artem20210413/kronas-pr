@@ -3,6 +3,7 @@
 use App\Http\Controllers\GuideProductionMaterialController;
 use App\Http\Controllers\Web\Decor\WebCellController;
 use App\Http\Controllers\Web\Decor\WebDecorController;
+use App\Http\Controllers\Web\Decor\WebTypeMaterialController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,19 +39,26 @@ Route::post('/cell', [WebCellController::class, 'CellUpdate']);
 Route::delete('/cell', [WebCellController::class, 'CellDestroy']);
 
 
+//Route::get('/decor', function (){
+//    return view('decor');
+//});
 
 Route::get('/decor', [WebDecorController::class, 'DecorGet']);
 Route::get('/decor/{id}/{decorName}', [WebDecorController::class, 'DecorWebCU']);
 Route::post('/decor', [WebDecorController::class, 'DecorCreateAndUpdate']);
 Route::delete('/decor/{id}', [WebDecorController::class, 'DecorDestroy']);
 
-//Route::get('/decor', function (){
-//    return view('decor');
-//});
 
-Route::get('/type_material', function (){
-    return view('type_material');
-});
+//Route::get('/type_material', function (){
+//    return view('type_material');
+//});
+Route::get('/type_material', [WebTypeMaterialController::class, 'TypeMaterialGet']);
+Route::get('/type_material/{id}/{tmName}', [WebTypeMaterialController::class, 'GetCreateTypeMaterial']);
+Route::post('/type_material', [WebTypeMaterialController::class, 'TypeMaterialCreate']);
+Route::delete('/type_material/{id}', [WebTypeMaterialController::class, 'TypeMaterialDestroy']);
+
+
+
 
 Route::get('/story_material', function (){
     return view('story_material');
