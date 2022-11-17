@@ -11,7 +11,8 @@
             <form class="mt-3">
                 <div class="row">
                     <div class="col-10">
-                        <input class="form-control" type="text" id="tm_name" name="tm_name" onkeyup="myFunction()" value="{{$tmname}}">
+                        <input class="form-control" type="text" id="tm_name" name="tm_name" onkeyup="myFunction()"
+                               value="{{$tmname}}">
                     </div>
                     <div class="col-2">
                         <button class="w-100 btn btn-primary" type="submit">Search</button>
@@ -33,14 +34,15 @@
 
             @foreach($TM as $el)
                 <tr id="{{$el->id}}">
-                    <form action="{{ url('/type_material', ['id' => $el->id]) }}" method="POST">
+                    <form data-id="{{$el->id}}" data-name="{{$el->tm_name}}" onsubmit="return send_id(this);">
                         @csrf
-                        @method('DELETE')
+                       <!-- method('DELETE')-->
                         <td>{{$el->id}}</td>
                         <td>{{$el->tm_name}}</td>
 
                         <td style="max-width: 50px">
-                            <a class="w-100 btn btn-warning" href="/type_material/{{$el->id}}/{{$el->tm_name}}">Update</a>
+                            <a class="w-100 btn btn-warning"
+                               href="/type_material/{{$el->id}}/{{$el->tm_name}}">Update</a>
                         </td>
                         <td style="max-width: 50px">
                             <button type="submit" class="w-100 btn btn-danger delete">Delete</button>
@@ -57,11 +59,28 @@
     //dd($GLOBALS);
     ?>
     <script>
-        $(".delete").on('click', function (e){
-            e.preventDefault();
+        function send_id(obj) {
+            console.log(obj.dataset.id);
 
-            alert({{$el->id}});
-        })
+            $.ajax({
+                type: "DELETE",
+                url: '/type_material/' + obj.dataset.id,
+                data: {'_token': $('input[name="_token"]').val()},
+
+                success: function (response, u) {
+                    location.reload();
+                },
+                error: function (response, u, v) {
+                    $.alert({
+                        type: 'red',
+                        draggable: false,
+                        title: JSON.parse(response.responseText).status,
+                        content: JSON.parse(response.responseText).message
+                    });
+                }
+            });
+            return false;
+        }
 
 
         $("#f").submit(function (e) {

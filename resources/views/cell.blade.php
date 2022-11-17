@@ -8,10 +8,10 @@
     <div class="row justify-content-md-center text-center">
         <div class="col-md-12">
 
-            <form method="get" action="/cell" class="mt-3" id="rack_form">
-                <div class="row">
+            <div class="mb-3 mt-4 row">
 
-                    <div class="mb-3 col-md-2 offset-md-5">
+                <div class="col-2 offset-5"><!--offset-md-5-->
+                    <form method="get" action="/cell" id="rack_form">
                         <select class="form-control" type="select" name="rack" id="rack_select">
                             <option value="">all</option>
                             @foreach($allRack as $el)
@@ -19,12 +19,13 @@
                                         @endif value="{{$el->rack}}">{{$el->rack}}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </form>
                 </div>
-            </form>
 
-            <div class=" mt-2">
-                <a class="w-100 btn btn-success" href="/cell/update">Create or update cell </a>
+                <div class="col-2 offset-3">
+                    <a class="w-100 btn btn-success" href="/cell/update">Editing cell</a>
+                </div>
+
             </div>
         </div>
 

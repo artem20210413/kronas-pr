@@ -8,15 +8,29 @@
         <div class="col-md-8">
 
 
-            <p class="mt-4">Decor</p>
-            <form class="needs-validation" id="setdecor"><!--action="api/v1/decor" method="post"-->
+
+            <form class="needs-validation mt-4" id="setdecor"><!--action="api/v1/decor" method="post"-->
                 @csrf
-                <input placeholder="id" class="form-control" type="number" name="id" value="{{$id}}">
-                <input autofocus placeholder="Decor name" class="form-control mt-2" type="text" name="decor_name"
-                       value="{{$decorName}}">
                 <div class="row">
-                    <button class="col-6 btn btn-dark btn mt-3" onclick="history.back()">Go Back</button>
-                    <button class= "col-6  btn btn-primary btn mt-3" type="submit">Save</button>
+                    @if($id != 0)
+                    <div class="col-2">
+
+                        <lable>ID</lable>
+                    <input disabled placeholder="id" class="form-control mt-1" type="number" name="id" value="{{$id}}">
+
+                    </div>
+                    @endif
+                    <div class="col-auto"><!--col-10-->
+                        <lable>Decor</lable>
+                    <input autofocus placeholder="Decor name" class="form-control  mt-1" type="text" name="decor_name"
+                           value="{{$decorName}}">
+                    </div>
+                    <div class="col-6">
+                        <button class="w-100 btn btn-dark btn mt-3" onclick="history.back()">Go Back</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="w-100 btn-primary btn mt-3" type="submit">Save</button>
+                    </div>
                 </div>
             </form>
 
