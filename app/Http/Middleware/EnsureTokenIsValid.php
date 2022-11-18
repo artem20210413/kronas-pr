@@ -11,34 +11,27 @@ class EnsureTokenIsValid
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
-
         $res = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
             'Authorization' => $request->header('Authorization'),
 
         ])->post('https://auth.kronas.com.ua/api/v1/my/roles');
-        if ($res->status() != 200) {
-            echo response()->json([
-                "code" => 401,
-                'status' => 'Fail',
-                'type' => 'error',
-                'message' => 'unauthorized'
-            ], 401);
-            exit();
-
+        if ($res->status() == 200) {
+            return $next($request);
         }
+        return response()->json([
+            "code" => 401,
+            'status' => 'Fail',
+            'type' => 'error',
+            'message' => 'unauthorized'
+        ], 401);
 
-//        if ($request->input('token') !== 'my-secret-token') {
-//            dd("unauthorized");
-//        }
-//        dd(1);
-        return $next($request);
     }
 }

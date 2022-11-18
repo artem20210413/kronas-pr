@@ -51,7 +51,7 @@ Route::get('v1/cell', [CellController::class, 'CellGet']);
 Route::post('v1/cell', [CellController::class, 'CellUpdate']);
 Route::delete('v1/cell', [CellController::class, 'CellDestroy']);
 
-Route::get('v1/decor', [DecorController::class, 'DecorGet']);
+Route::get('v1/decor', [DecorController::class, 'DecorGet'])->middleware('check_token');
 Route::post('v1/decor', [DecorController::class, 'DecorCreateAndUpdate']);
 Route::delete('v1/decor', [DecorController::class, 'DecorDestroy']);
 
