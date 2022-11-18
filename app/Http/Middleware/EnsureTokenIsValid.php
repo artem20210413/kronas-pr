@@ -26,6 +26,7 @@ class EnsureTokenIsValid
         if ($res->status() == 200) {
             return $next($request);
         }
+
         return response()->json([
             "code" => 401,
             'status' => 'Fail',

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('rack');
             $table->integer('storey');
             $table->integer('row');
+            $table->string('storage_id');
             //$table->timestamps();
         });
     }

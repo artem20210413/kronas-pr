@@ -80,7 +80,7 @@ class CellController extends Controller
 //            $vRack = $request->get('rack');
             $vId = $request->post('id');
             $vRack = $request->post('rack');
-//            $cell = new Cell();
+            $vStorage = $request->post('storage_id');
 
             if ($vId != null) {
                 Cell::destroy($vId);

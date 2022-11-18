@@ -24,8 +24,6 @@ class MaterialModel extends Model
         'width',
         'thickness',
         'code_user',
-//        'created_at',
-//        'updated_at',
         'accounting'
     ];
 
@@ -33,14 +31,16 @@ class MaterialModel extends Model
     {
         return $this->fillable;
     }
-protected $guarded = ['created_at'];
+
+    protected $guarded = ['created_at'];
+
     public function decor(): HasOne
     {
         return $this->hasOne(Decor::class, 'id', 'decor_id');
     }
 
-    protected static function boot(): void
-    {
-        parent::boot();
-    }
+//    protected static function boot(): void
+//    {
+//        parent::boot();
+//    }
 }

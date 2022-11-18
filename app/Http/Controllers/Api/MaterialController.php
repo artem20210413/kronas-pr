@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MaterialCollection;
-use App\Models\MaterialAllModel;
 use App\Models\MaterialModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -19,21 +18,29 @@ class MaterialController extends Controller
 {
 
 
-
-    function empty($string): string
+    public function takeMaterial($user, MaterialModel $material)
     {
-        if ($string != null)
-            return ' ' . $string;
-        else
-            return '';
+        $material->accounting = 0;
+        $material->cell = 0;
+        $material->update();
+        (new StoryMaterialController())->storyMaterial->StoryMaterialPost($material->id, $user, 2);
+        return (new JSONcontroller())->JSONsuccessArray('Update', 'Update material', $material, 201);
     }
 
-    public function GG(Request $request)
-    {
-        //dd(MaterialAllModel::cell());
-        dd(DB::select('CALL material_decor(' . $request->get('id') . ')'));
+//    function empty($string): stringf
+//    {
+//        if ($string != null)
+//            return ' ' . $string;
+//        else
+//            return '';
+//    }
 
-    }
+//    public function GG(Request $request)
+//    {
+//        //dd(MaterialAllModel::cell());
+//        dd(DB::select('CALL material_decor(' . $request->get('id') . ')'));
+//
+//    }
 
     public function MaterialHelp()
     {

@@ -39,25 +39,27 @@ Route::post('v1/cell/delete', [CellController::class, 'destroy']);
 
 
 
-Route::get('v1/material/help', [MaterialController::class, 'MaterialHelp']);
-Route::get('v1/material', [MaterialController::class, 'MaterialGet']);
-Route::post('v1/material', [MaterialController::class, 'MaterialPost']);
-Route::delete('v1/material', [MaterialController::class, 'MaterialDelete']);
+Route::get('v1/material/help', [MaterialController::class, 'MaterialHelp'])->middleware('check_token');
+Route::get('v1/material', [MaterialController::class, 'MaterialGet'])->middleware('check_token');
+Route::post('v1/material', [MaterialController::class, 'MaterialPost'])->middleware('check_token');
+Route::delete('v1/material', [MaterialController::class, 'MaterialDelete'])->middleware('check_token');
 
-Route::get('v1/story-material', [StoryMaterialController::class, 'StoryMaterialGet']);
+Route::get('v1/story-material', [StoryMaterialController::class, 'StoryMaterialGet'])->middleware('check_token');
 
 //Route::get('v1/cell/{cell_id}/get', [CellController::class, 'CellId']);
-Route::get('v1/cell', [CellController::class, 'CellGet']);
-Route::post('v1/cell', [CellController::class, 'CellUpdate']);
-Route::delete('v1/cell', [CellController::class, 'CellDestroy']);
+Route::get('v1/cell', [CellController::class, 'CellGet'])->middleware('check_token');
+Route::post('v1/cell', [CellController::class, 'CellUpdate'])->middleware('check_token');
+Route::delete('v1/cell', [CellController::class, 'CellDestroy'])->middleware('check_token');
+
+Route::get('v1/user/{user}/material/{material_id}/take', [MaterialController::class, 'takeMaterial'])->middleware('check_token');
 
 Route::get('v1/decor', [DecorController::class, 'DecorGet'])->middleware('check_token');
-Route::post('v1/decor', [DecorController::class, 'DecorCreateAndUpdate']);
-Route::delete('v1/decor', [DecorController::class, 'DecorDestroy']);
+Route::post('v1/decor', [DecorController::class, 'DecorCreateAndUpdate'])->middleware('check_token');
+Route::delete('v1/decor', [DecorController::class, 'DecorDestroy'])->middleware('check_token');
 
-Route::get('v1/type-material', [TypeMaterialController::class, 'TypeMaterialGet']);
-Route::post('v1/type-material', [TypeMaterialController::class, 'TypeMaterialCreate']);
-Route::delete('v1/type-material', [TypeMaterialController::class, 'TypeMaterialDestroy']);
+Route::get('v1/type-material', [TypeMaterialController::class, 'TypeMaterialGet'])->middleware('check_token');
+Route::post('v1/type-material', [TypeMaterialController::class, 'TypeMaterialCreate'])->middleware('check_token');
+Route::delete('v1/type-material', [TypeMaterialController::class, 'TypeMaterialDestroy'])->middleware('check_token');
 
 /** Admin User routes */
 //Route::group(['middleware' => [Helper::getImplodeRoleNames([])]], static function () {
