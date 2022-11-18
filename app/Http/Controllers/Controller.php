@@ -19,30 +19,26 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-//    public function __construct(Request $request)
-//    {
-//            $res = Http::withHeaders([
-//                'Content-Type' => 'application/json',
-//                'Accept' => 'application/json',
-//                'Authorization' => $request->header('Authorization'),
-//
-//            ])->post('https://auth.kronas.com.ua/api/v1/my/roles');
-//            if ($res->status() == 200) {
-//
-//                //dd(true);
-//                return true;
-//            } else {
-//                echo response()->json([
-//                    "code" => 401,
-//                    'status' => 'Fail',
-//                    'type' => 'error',
-//                    'message' => 'unauthorized'
-//                ], 401);
-//                exit();
-//            }
-//    }
+    public function __construct(Request $request)
+    {
+        $res = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'Authorization' => $request->header('Authorization'),
 
+        ])->post('https://auth.kronas.com.ua/api/v1/my/roles');
+        if ($res->status() == 200) {
 
-
-
+            //dd(true);
+            return true;
+        } else {
+            echo response()->json([
+                "code" => 401,
+                'status' => 'Fail',
+                'type' => 'error',
+                'message' => 'unauthorized'
+            ], 401);
+            exit();
+        }
+    }
 }
