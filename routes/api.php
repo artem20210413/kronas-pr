@@ -53,7 +53,7 @@ Route::delete('v1/material', [MaterialController::class, 'MaterialDelete'])->mid
 Route::get('v1/story-material', [StoryMaterialController::class, 'StoryMaterialGet'])->middleware('check_token');
 
 //Route::get('v1/cell/{cell_id}/get', [CellController::class, 'CellId']);
-Route::get('v1/cell', [CellController::class, 'CellGet'])->middleware('check_token');
+Route::get('v1/cell', [CellController::class, 'cellGet'])->middleware('check_token');
 Route::post('v1/cell', [CellController::class, 'CellUpdate'])->middleware('check_token');
 Route::delete('v1/cell', [CellController::class, 'CellDestroy'])->middleware('check_token');
 

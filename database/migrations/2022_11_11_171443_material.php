@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('vendor_code',32);
             $table->unsignedBigInteger('type_material_id');
             $table->unsignedBigInteger('decor_id');
-            $table->unsignedBigInteger('cell_id');
+            $table->unsignedBigInteger('cell_id')->nullable();
             $table->integer('length');
             $table->integer('width');
             $table->integer('thickness');
