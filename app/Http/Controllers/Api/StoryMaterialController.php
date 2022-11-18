@@ -64,8 +64,13 @@ class StoryMaterialController extends Controller
         $SM->vendor_code = $material->vendor_code;
         $SM->type_material = TypeMaterialModel::find($material->type_material_id)->tm_name;
         $SM->decor = Decor::find($material->decor_id)->decor_name;
-        $cell = Cell::find($material->cell_id);
-        $SM->cell = $cell->rack . '-' . $cell->storey . '-' . $cell->row;
+        if($material->cell_id) {
+            $cell = Cell::find($material->cell_id);
+            $SM->cell = $cell->rack . '-' . $cell->storey . '-' . $cell->row;
+        }
+        else{
+            $SM->cell = '-';
+        }
         $SM->length = $material->length;
         $SM->width = $material->width;
         $SM->thickness = $material->thickness;

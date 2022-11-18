@@ -18,13 +18,35 @@ class MaterialController extends Controller
 {
 
 
-    public function takeMaterial($user, MaterialModel $material)
+    public function takeMaterial($user, $material_id)
     {
-        $material->accounting = 0;
-        $material->cell = 0;
-        $material->update();
-        (new StoryMaterialController())->storyMaterial->StoryMaterialPost($material->id, $user, 2);
-        return (new JSONcontroller())->JSONsuccessArray('Update', 'Update material', $material, 201);
+        try {
+            $material = MaterialModel::find($material_id);
+            $material->accounting = 0;
+            $material->cell_id = null;
+            $material->update();
+
+            (new StoryMaterialController())->StoryMaterialPost($material->id, $user, 2);
+
+            return (new JSONcontroller())->JSONsuccessArray('take', 'Update material', $material, 201);
+        } catch (\Exception $e) {
+
+            return (new JSONcontroller())->JSONerror($e->getMessage(), 501);
+        }
+    }
+
+    public function moveMaterial($user, $material_id, $cell_id)
+    {
+        try {
+            $material = MaterialModel::find($material_id);
+            $material->accounting = 1;
+            $material->cell_id = $cell_id;
+            $material->update();
+            (new StoryMaterialController())->StoryMaterialPost($material->id, $user, 2);
+            return (new JSONcontroller())->JSONsuccessArray('move', 'Update material', $material, 201);
+        } catch (\Exception $e) {
+            return (new JSONcontroller())->JSONerror($e->getMessage(), 501);
+        }
     }
 
 //    function empty($string): stringf
@@ -162,12 +184,6 @@ class MaterialController extends Controller
 
 
         try {
-//            Authenticate by token
-            if (!$this->validToken($request)) {
-                return (new JSONcontroller())->JSONerror("unauthorized", 401);
-            }
-
-//            $this->validToken($request);
 
             $vId = $request->post('id');
             $vVendor_code = $request->get('vendor_code');

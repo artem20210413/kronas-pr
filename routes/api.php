@@ -39,10 +39,16 @@ Route::post('v1/cell/delete', [CellController::class, 'destroy']);
 
 
 
+/* снять  матреиал с учета / для мобильной версии */
+Route::get('v1/user/{user}/material/{material_id}/take', [MaterialController::class, 'takeMaterial'])->middleware('check_token');
+/* переместить материал в ячейку / для мобильной версии */
+Route::get('v1/user/{user}/material/{material_id}/cell/{cell_id}/move', [MaterialController::class, 'moveMaterial'])->middleware('check_token');
+
 Route::get('v1/material/help', [MaterialController::class, 'MaterialHelp'])->middleware('check_token');
 Route::get('v1/material', [MaterialController::class, 'MaterialGet'])->middleware('check_token');
-Route::post('v1/material', [MaterialController::class, 'MaterialPost'])->middleware('check_token');
+Route::post('v1/material', [MaterialController::class, 'MaterialPost']);
 Route::delete('v1/material', [MaterialController::class, 'MaterialDelete'])->middleware('check_token');
+
 
 Route::get('v1/story-material', [StoryMaterialController::class, 'StoryMaterialGet'])->middleware('check_token');
 
@@ -51,7 +57,6 @@ Route::get('v1/cell', [CellController::class, 'CellGet'])->middleware('check_tok
 Route::post('v1/cell', [CellController::class, 'CellUpdate'])->middleware('check_token');
 Route::delete('v1/cell', [CellController::class, 'CellDestroy'])->middleware('check_token');
 
-Route::get('v1/user/{user}/material/{material_id}/take', [MaterialController::class, 'takeMaterial'])->middleware('check_token');
 
 Route::get('v1/decor', [DecorController::class, 'DecorGet'])->middleware('check_token');
 Route::post('v1/decor', [DecorController::class, 'DecorCreateAndUpdate'])->middleware('check_token');
