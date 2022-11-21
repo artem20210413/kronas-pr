@@ -29,22 +29,29 @@ class StoryMaterialController extends Controller
             $vUpdated_at = $request->get('updated_at');
             $vAccounting = $request->get('accounting');
             $vStorageCode = $request->get('storage_code');
+            $vCount = $request->get('count');
+            if ($vCount == null || $vCount == 0) {
+                $vCount = 512;
+            }
 
             if ($vId == null && $vVendor_code == null && $vType_material_id == null && $vDecor_id == null && $vCell_id == null &&
-                 $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null && $vStorageCode == null) {
+                $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null && $vStorageCode == null) {
                 $SM = new StoryMaterialModel(); //model
-                return $JSON->JSONsuccessArray('Get  all', 'Story material', $SM::all(), 200);
+                return $JSON->JSONsuccessArray('Get  all. Count: ' . $vCount, 'Story material', $SM::skip($vCount)->take($vCount)->get(), 200);
             } else {
                 $sm = StoryMaterialModel::where('id', '<>', 0);
 
-                foreach ($request->all() as $key => $req)
-                    if ($key != 'id')
+                foreach ($request->all() as $key => $req) {
+                    if ($key != 'id') {
                         $sm->where($key, 'like', "%" . $req . "%");
-                    else $sm->where($key, $req);
+                    } else {
+                        $sm->where($key, $req);
+                    }
+                }
 
-                $GetTM = $sm->get();
+                $GetTM = $sm->skip($vCount)->take($vCount)->get();
 
-                return $JSON->JSONsuccessArray('Пошук по змінній',
+                return $JSON->JSONsuccessArray('Пошук по змінній. Count:' . $vCount,
                     'Material',
                     $GetTM,
                     200);
@@ -52,9 +59,7 @@ class StoryMaterialController extends Controller
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }
-
     }
-
     public function StoryMaterialPost($materialId, $kronas_user, $action_material_id)
     {
         $SM = new StoryMaterialModel();
@@ -64,11 +69,10 @@ class StoryMaterialController extends Controller
         $SM->vendor_code = $material->vendor_code;
         $SM->type_material = TypeMaterialModel::find($material->type_material_id)->tm_name;
         $SM->decor = Decor::find($material->decor_id)->decor_name;
-        if($material->cell_id) {
+        if ($material->cell_id) {
             $cell = Cell::find($material->cell_id);
             $SM->cell = $cell->rack . '-' . $cell->storey . '-' . $cell->row;
-        }
-        else{
+        } else {
             $SM->cell = '-';
         }
         $SM->length = $material->length;

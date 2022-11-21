@@ -11,7 +11,8 @@
             <div class="mb-3 mt-4 row">
 
                 <div class="col-2 offset-5"><!--offset-md-5-->
-                    <form method="get" action="/cell" id="rack_form">
+                    <form method="get" action="/cell/{{$storage_id}}" id="rack_form">
+                        <lable>Storage id: {{$storage_id}}</lable>
                         <select class="form-control" type="select" name="rack" id="rack_select">
                             <option value="">all</option>
                             @foreach($allRack as $el)
@@ -23,7 +24,7 @@
                 </div>
 
                 <div class="col-2 offset-3">
-                    <a class="w-100 btn btn-success" href="/cell/update">Editing cell</a>
+                    <a class="w-100 btn btn-success" href="/cell/update/{{$storage_id}}">Editing cell</a>
                 </div>
 
             </div>
@@ -48,40 +49,7 @@
 
     <script>
 
-        $("#f").submit(function (e) {
-            e.preventDefault();
 
-            const data = $(this).serializeArray();
-
-            $.ajax({
-                type: "DELETE",
-                url: '/decor',
-                data: data,
-
-                success: function (response, u) {
-                    console.log(response, u);
-                    //location.reload();
-                    $.alert({
-                        //theme: 'black',
-                        type: 'green',
-                        draggable: false,
-                        title: response.status,
-                        content: response.message,
-                        confirm: function () {
-                            location.reload();
-                        }
-                    });
-                },
-                error: function (response, u, v) {
-                    $.alert({
-                        type: 'red',
-                        draggable: false,
-                        title: JSON.parse(response.responseText).status,
-                        content: JSON.parse(response.responseText).message
-                    });
-                }
-            });
-        });
 
         $("#rack_select").on("change", function () {
             $("#rack_form").submit();

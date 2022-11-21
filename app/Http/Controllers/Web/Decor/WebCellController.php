@@ -14,8 +14,6 @@ class WebCellController extends Controller
 {
     public function ViewCellUpdate(Request $request)
     {
-
-
         return view('cell_CU', ['create' => $request->get('create')]);
     }
 
@@ -24,33 +22,57 @@ class WebCellController extends Controller
         return Cell::distinct()->get('rack');
     }
 
-    public function CellGet(Request $request)
+    public function cellGet($vStorage ,Request $request, JSONcontroller $JSON)
     {
         try {
-            if ($vId = $request->get('id') != null) {
-                $vCall = DB::table('cell')->where('id', $vId)->get();
-            } else if (($vRack = $request->get('rack')) != null || $request->get('rack') != "") {
-                $vCall = DB::table('cell')->where('rack', $vRack)->get();
-            } else {
-                $vCall = Cell::all();
+            $vRack = $request->get('rack');
+            $vId = $request->get('id');
+//            $vStorage = $request->get('storage');
+
+            if ($vId != null) {
+                $vCall = Cell::whereId($vId)->get();
             }
-            return view('cell', ['cell' => $vCall, 'rack' => $request->rack, 'allRack' => Cell::distinct()->get('rack')]);
+            if ($vStorage == null) {
+                return $JSON->JSONerror('`storage` field is missing', 400);
+            }
+            if ($vRack == null) {
+                $vCall = Cell::whereStorage_id($vStorage)->get();
+            } else {
+                $vCall = Cell::whereStorage_id($vStorage)->whereRack($vRack)->get();
+            }
+            return view('cell', ['cell' => $vCall, 'rack' => $vRack, 'allRack' => Cell::distinct()->whereStorage_id($vStorage)->get('rack'), 'storage_id' => $vStorage]);
         } catch (\Exception $e) {
-            return (new JSONcontroller)->JSONerror($e->getMessage(), 400);
+            return $JSON->JSONerror($e->getMessage(), 400);
         }
     }
 
+//    public function CellGet(Request $request)
+//    {
+//        try {
+//            if ($vId = $request->get('id') != null) {
+//                $vCall = DB::table('cell')->where('id', $vId)->get();
+//            } else if (($vRack = $request->get('rack')) != null || $request->get('rack') != "") {
+//                $vCall = DB::table('cell')->where('rack', $vRack)->get();
+//            } else {
+//                $vCall = Cell::all();
+//            }
+//            return view('cell', ['cell' => $vCall, 'rack' => $request->rack, 'allRack' => Cell::distinct()->get('rack')]);
+//        } catch (\Exception $e) {
+//            return (new JSONcontroller)->JSONerror($e->getMessage(), 400);
+//        }
+//    }
 
-    public function CellUpdate(Request $request)
+
+    public function CellUpdate($vStorage, Request $request)
     {
         try {
             $vRack = $request->post('rack');
             $vStorey = $request->post('storey');
             $vRow = $request->post('row');
-            if ($vRack == null || $vStorey == null || $vStorey <=0 || $vRow == null || $vRow <=0) {
+            if ($vRack == null || $vStorey == null || $vStorey <= 0 || $vRow == null || $vRow <= 0) {
                 return (new JSONcontroller)->JSONerror('Нічого не передали або значення від`ємне', 401); //немає аргументів `rack`,`storey`,`row`
             }
-            $vAllCell = DB::table('cell')->where('rack', $vRack)->latest('storey')->latest('row')->get();
+            $vAllCell = DB::table('cell')->where('rack', $vRack)->where('storage_id',$vStorage)->latest('storey')->latest('row')->get();
             foreach ($vAllCell as $cell) {
                 if ($cell->storey > $vStorey)
                     Cell::destroy($cell->id);
@@ -59,24 +81,26 @@ class WebCellController extends Controller
             }
             for ($s = 1; $s <= $vStorey; $s++) {
                 for ($r = 1; $r <= $vRow; $r++) {
-                    if (DB::table('cell')->where('rack', $vRack)->where('storey', $s)->where('row', $r)->get()->first() == null) {
+                    if (DB::table('cell')->where('rack', $vRack)->where('storage_id',$vStorage)->where('storey', $s)->where('row', $r)->get()->first() == null) {
                         $cell = new Cell();
                         $cell->rack = $vRack;
                         $cell->storey = $s;
                         $cell->row = $r;
+                        $cell->storage_id = $vStorage;
                         $cell->save();
                     }
                 }
             }
-            $cellAll = DB::table('cell')->where('rack', $vRack)->latest('storey')->latest('row')->get();
-            return ['cell' => $cellAll, 'rack' => $vRack];
+            $cellAll = DB::table('cell')->where('rack', $vRack)->where('storage_id',$vStorage)->latest('storey')->latest('row')->get();
+            return ['cell' => $cellAll, 'rack' => $vRack, 'storage_id' => $vStorage];
             // return view('cell', ['cell' => $cellAll, 'rack' => $vRack]);
             // return JSONcontroller::JSONsuccessArray('Update', 'New Cells', $cellAll, 201);
         } catch (\Exception $e) {
             return (new JSONcontroller)->JSONerror($e->getMessage(), 501);
         }
     }
-    public function CellDestroy(Request $request)
+
+    public function CellDestroy($vStorage, Request $request)
     {
 //        $vRack = $request->post('rack');
 //        $r = Cell::whereRack($vRack);
@@ -91,14 +115,14 @@ class WebCellController extends Controller
 //            $cell = new Cell();
             if ($vId != null) {
                 Cell::destroy($vId);
-               return (new JSONcontroller)->SONsuccess('Destroy element by id = ' . $vId, 201);
+                return (new JSONcontroller)->SONsuccess('Destroy element by id = ' . $vId, 201);
             } else if ($vRack != null) {
 
-                $vAllCell = Cell::whereRack($request->post('rack'));
+                $vAllCell = Cell::whereRack($vRack)->whereStorage_id($vStorage);
                 $count = $vAllCell->delete();
-               return (new JSONcontroller)->JSONsuccess('Destroy array by rack = ' . $vRack . '. delete ' . $count . ' elements.', 201);
+                return (new JSONcontroller)->JSONsuccess('Destroy array by rack = ' . $vRack . '. delete ' . $count . ' elements.', 201);
             } else {
-               return (new JSONcontroller)->JSONerror('Нічого не передали або немає аргументів `id` або `rack`', 401);
+                return (new JSONcontroller)->JSONerror('Нічого не передали або немає аргументів `id` або `rack`', 401);
             }
         } catch (\Exception $e) {
             return (new JSONcontroller)->JSONerror($e->getMessage(), 400);
