@@ -18,15 +18,17 @@ class MaterialController extends Controller
 {
 
 
-    public function takeMaterial($user, $material_id)
+    public function takeMaterial($user, MaterialModel $material)
     {
         try {
-            $material = MaterialModel::find($material_id);
+           // dd($material_id);
+            //$material = MaterialModel::find($material_id);
+            //dd($material);
             $material->accounting = 0;
             $material->cell_id = null;
             $material->update();
 
-            (new StoryMaterialController())->StoryMaterialPost($material->id, $user, 2);
+            (new StoryMaterialController())->StoryMaterialPost($material->id, $user, 3);
 
             return (new JSONcontroller())->JSONsuccessArray('take', 'Update material', $material, 201);
         } catch (\Exception $e) {
@@ -35,14 +37,14 @@ class MaterialController extends Controller
         }
     }
 
-    public function moveMaterial($user, $material_id, $cell_id)
+    public function moveMaterial($user, MaterialModel $material, $cell_id)
     {
         try {
-            $material = MaterialModel::find($material_id);
+            //$material = MaterialModel::find($material_id);
             $material->accounting = 1;
             $material->cell_id = $cell_id;
             $material->update();
-            (new StoryMaterialController())->StoryMaterialPost($material->id, $user, 2);
+            (new StoryMaterialController())->StoryMaterialPost($material->id, $user, 3);
             return (new JSONcontroller())->JSONsuccessArray('move', 'Update material', $material, 201);
         } catch (\Exception $e) {
             return (new JSONcontroller())->JSONerror($e->getMessage(), 501);

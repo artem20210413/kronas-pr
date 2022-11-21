@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\URL;
 
 class CellController extends Controller
 {
-    public function CellUpdate(Request $request, JSONcontroller $JSON)
+    public function update(Request $request, JSONcontroller $JSON)
     {
         try {
             $vRack = $request->post('rack');
@@ -23,12 +23,14 @@ class CellController extends Controller
                 return $JSON->JSONerror('Нічого не передали або немає аргументів `rack`,`storey`,`row`, `storage``', 401);
             }
             $vAllCell = DB::table('cell')->where('rack', $vRack)->where('storage_id', $vStorage)->latest('storey')->latest('row')->get();
+
             foreach ($vAllCell as $cell) {
                 if ($cell->storey > $vStorey)
                     Cell::destroy($cell->id);
                 if ($cell->row > $vRow)
                     Cell::destroy($cell->id);
             }
+
             for ($s = 1; $s <= $vStorey; $s++) {
                 for ($r = 1; $r <= $vRow; $r++) {
                     if (DB::table('cell')->where('rack', $vRack)->where('storage_id', $vStorage)->where('storey', $s)->where('row', $r)->get()->first() == null) {
@@ -41,6 +43,7 @@ class CellController extends Controller
                     }
                 }
             }
+
             $cellAll = DB::table('cell')->where('rack', $vRack)->where('storage_id',$vStorage)->latest('storey')->latest('row')->get();
             return $JSON->JSONsuccessArray('Update', 'New Cells', $cellAll, 201);
 
@@ -49,7 +52,7 @@ class CellController extends Controller
         }
     }
 
-    public function CellDestroy(Request $request, JSONcontroller $JSON)
+    public function destroy(Request $request, JSONcontroller $JSON)
     {
         try {
             $vId = $request->post('id');
@@ -62,12 +65,6 @@ class CellController extends Controller
             } else if ($vRack != null) {
                 $vAllCell = Cell::whereRack($request->post('rack'))->whereStorage_id($vStorage);
                 $count = $vAllCell->delete();
-//                $vAllCell = DB::table('cell')->where('rack', $vRack)->get();
-//                $count = 0;
-//                foreach ($vAllCell as $cell) {
-//                    Cell::destroy($cell->id);
-//                    $count++;
-//                }
                 return $JSON->JSONsuccess('Destroy array by rack = ' . $vRack . '. delete ' . $count . ' elements.', 201);
             } else {
                 return $JSON->JSONerror('Нічого не передали або немає аргументів `id` або `rack`', 401);
@@ -78,7 +75,7 @@ class CellController extends Controller
     }
 
 
-    public function cellGet(Request $request, JSONcontroller $JSON)
+    public function index(Request $request, JSONcontroller $JSON)
     {
         try {
             $vRack = $request->get('rack');
