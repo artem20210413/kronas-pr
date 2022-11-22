@@ -7,7 +7,6 @@
     <div class="row justify-content-md-center text-center">
         <div class="col-md-8">
 
-
             <p class="mt-4">Cell</p>
             <form id="cell_form" class="needs-validation" action="" method="POST">
                 @csrf
@@ -39,10 +38,9 @@
         $("#cell_form").submit(function (e) {
             e.preventDefault();
             const data = $(this).serializeArray();
-
             $.ajax({
                 type: "POST",
-                url: '/cell/' + document.getElementById("storage").value,
+                url: '/cell/' + document.getElementById("storage_header").value,
                 data: data,
 
                 success: function (response) {

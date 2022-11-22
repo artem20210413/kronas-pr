@@ -32,11 +32,11 @@ Route::get('v1/user/{user}/material/{material}/cell/{cell_id}/move', [MaterialCo
 
 Route::get('v1/material/help', [MaterialController::class, 'MaterialHelp'])->middleware('check_token');
 Route::get('v1/material', [MaterialController::class, 'MaterialGet'])->middleware('check_token');
-Route::post('v1/material', [MaterialController::class, 'MaterialPost']);
+Route::post('v1/material', [MaterialController::class, 'MaterialPost'])->middleware('check_token');
 Route::delete('v1/material', [MaterialController::class, 'MaterialDelete'])->middleware('check_token');
 
 
-Route::get('v1/story-material', [StoryMaterialController::class, 'StoryMaterialGet'])->middleware('check_token');
+Route::get('v1/story-material', [StoryMaterialController::class, 'StoryMaterialGet']);//->middleware('check_token');
 
 //Route::get('v1/cell/{cell_id}/get', [CellController::class, 'CellId']);
 Route::get('v1/cell', [CellController::class, 'index'])->middleware('check_token');

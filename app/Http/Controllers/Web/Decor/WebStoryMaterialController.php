@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\JSONcontroller;
 use App\Http\Controllers\Controller;
 use App\Models\StoryMaterialModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use function GuzzleHttp\Promise\all;
 
 class WebStoryMaterialController extends Controller
@@ -38,14 +39,16 @@ class WebStoryMaterialController extends Controller
                 $TM = new StoryMaterialModel(); //model
                 $GetTM = $TM->all();
             } else {
-                $sm = StoryMaterialModel::where('id', '<>', 0);
+                //$sm = StoryMaterialModel::where('id', '<>', 0);
+                $sm = StoryMaterialModel::all();
                 foreach ($request->all() as $key => $req)
                     if ($key != 'id')
                         $sm->where($key, 'like', "%" . $req . "%");
                     else $sm->where($key, $req);
-                $GetTM = $sm->skip($vCount)->take($vCount)->get();
+                $GetTM = $sm;//->skip($vCount)->take($vCount);
             }
-            return view('story_material', ['SM' => $GetTM]);
+            //dd($sm);
+            return view('story_material', ['SM' => $GetTM, 'request' => $request]);
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
         }
