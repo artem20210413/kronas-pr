@@ -5,8 +5,6 @@
 @endsection
 @section('body')
 
-
-
     <form class="mt-3 mb-3">
         <div class="accordion" id="accordionExample">
 
@@ -58,11 +56,7 @@
                             <label> id </label>
                             <input class="form-control" name="id" id="id" type="number" value="{{$request->id}}">
                         </div>
-                        <div class="col-2 p-2">
-                            <label> storage_code </label>
-                            <input class="form-control" name="storage_code" id="storage_code" type="number"
-                                   value="{{$request->storage_code}}">
-                        </div>
+
                         <div class="col-2 p-2">
                             <label> vendor_code </label>
                             <input class="form-control" name="vendor_code" id="vendor_code" type="number"
@@ -84,33 +78,17 @@
                             <input class="form-control" name="kronas_user" id="kronas_user" type="number"
                                    value="{{$request->kronas_user}}">
                         </div>
-                        <div class="col-2 p-2">
-                            <label> action_material_id </label>
-                            <input class="form-control" name="action_material_id" id="action_material_id" type="number"
-                                   value="{{$request->action_material_id}}">
-                        </div>
+
                         <div class="col-2 p-2">
                             <label> accounting </label>
                             <input class="form-control" name="accounting" id="accounting" type="text"
                                    value="{{$request->accounting}}">
                         </div>
-                        <div class="col-2 p-2">
-                            <label> storage_code </label>
-                            <input class="form-control" name="storage_code" id="storage_code" type="text"
-                                   value="{{$request->storage_code}}">
-                        </div>
-
-
-                        <!--<button class="w-100 btn btn-primary">Search</button>-->
                     </div>
-
                 </div>
             </div>
         </div>
-
         <button type="submit" class="w-100 btn btn-primary mt-2"> Search</button>
-
-
     </form>
 
     <table class="table mt-4" id="story_table">
@@ -126,8 +104,6 @@
             <th scope="col">thickness</th>
             <th scope="col">created_at</th>
             <th scope="col">updated_at</th>
-            <th scope="col">kronas_user</th>
-            <th scope="col">material_id</th>
             <th scope="col">accounting</th>
         </tr>
 
@@ -136,9 +112,9 @@
                 <td>{{$el->id}}</td>
                 <td>{{$el->storage_code}}</td>
                 <td>{{$el->vendor_code}}</td>
-                <td>{{$el->type_material}}</td>
+                <td>{{$el->tm_name}}</td>
                 <td>{{$el->decor_name}}</td>
-                <td>{{$el->cell}}</td>
+                <td>{{$el->rack. "-" .$el->storey. "-" .$el->row}}</td>
                 <td>{{$el->length}}</td>
                 <td>{{$el->width}}</td>
                 <td>{{$el->thickness}}</td>

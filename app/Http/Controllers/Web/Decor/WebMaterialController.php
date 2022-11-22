@@ -14,29 +14,24 @@ use Illuminate\Support\Facades\DB;
 class WebMaterialController extends Controller
 {
 
-    private function getMaterial(){
+    private function getMaterial($decor, $tm){
 //        $Ms =  MaterialModel::all();
-        $Ms =  MaterialModel::where('id', '<>', 0)->get();
-        //dump("Ms / " . $Ms);
-        foreach ($Ms as $M) {
-            //dump("M / " . $M);
-            foreach ($M as $kay => $value) {
-                //if ($kay == 'decor_id') {
-                    dump($kay . " / " . $value);
-               // }
-            }
-        }
-        dd(5);
-        return ;
+        //$Ms =  MaterialModel::where('id', '<>', 0)->get();
+        $decor = '%'.$decor.'%';
+        //$tm = '%'. trim($tm) .'%';
+        $tm = '%'.$tm .'%';
+        $M = DB::select("CALL material_by('". $decor ."', '". $tm ."');");
+        return $M;
     }
+
     public function index(Request $request, JSONcontroller $JSON)
-    {$this->getMaterial();
+    {
         try {
             $vId = $request->get('id');
             $vVendor_code = $request->get('vendor_code');
-            $vType_material_id = $request->get('type_material_id');
-            $vDecor_id = $request->get('decor_id');
-            $vCell_id = $request->get('cell_id');
+            $vType_material = $request->get('type_material');
+            $vDecor = $request->get('decor');
+            $vCell = $request->get('cell');
             $vLength = $request->get('length');
             $vWidth = $request->get('width');
             $vThickness = $request->get('thickness');
@@ -44,8 +39,8 @@ class WebMaterialController extends Controller
             $vUpdated_at = $request->get('updated_at');
             $vAccounting = $request->get('accounting');
             $vStorageCode = $request->get('storage_code');
-
-            if ($vId == null && $vVendor_code == null && $vType_material_id == null && $vDecor_id == null && $vCell_id == null
+            $material_call =  $this->getMaterial($vDecor, $vType_material);
+            if ($vId == null && $vVendor_code == null && $vType_material == null && $vDecor == null && $vCell == null
                 && $vLength == null && $vWidth == null && $vThickness == null && $vCreated_at == null && $vUpdated_at == null && $vAccounting == null && $vStorageCode == null) {
                 $material = new MaterialModel(); //model
                 $GetTM = $material::all();
@@ -61,7 +56,7 @@ class WebMaterialController extends Controller
                 }
 
                 $GetTM = $m->get();
-                return view('production_material', ['M' => $GetTM, 'request' => $request]);
+                return view('production_material', ['M' => $material_call, 'request' => $request]);
             }
         } catch (\Exception $e) {
             return $JSON->JSONerror($e->getMessage(), 501);
