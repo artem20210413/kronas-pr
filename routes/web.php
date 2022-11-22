@@ -3,6 +3,7 @@
 use App\Http\Controllers\GuideProductionMaterialController;
 use App\Http\Controllers\Web\Decor\WebCellController;
 use App\Http\Controllers\Web\Decor\WebDecorController;
+use App\Http\Controllers\Web\Decor\WebMaterialController;
 use App\Http\Controllers\Web\Decor\WebStoryMaterialController;
 use App\Http\Controllers\Web\Decor\WebTypeMaterialController;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +24,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/laravel', function () {
     return view('welcome');
 });
-Route::get('/', function (){
-    return view('production_material');
-});
+//Route::get('/', function (){
+//    return view('production_material');
+//});
+Route::get('/material/{material}', [WebMaterialController::class, 'index']);
 
 //Route::get('/cell', function (){
 //    return view('cell');

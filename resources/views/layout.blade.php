@@ -32,7 +32,7 @@
             <div id="url"  class="col-6">
                 <ul class="nav  col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 
-                    <li><a id="material_header" href="/" class="nav-link px-2 text-white">Production material</a></li>
+                    <li><a id="material_header" href="/material/" class="nav-link px-2 text-white">Production material</a></li>
                     <li><a id="decor_header" href="/decor" class="nav-link px-2 text-white">Decor</a></li>
                     <li><a id="type_material_header" href="/type_material" class="nav-link px-2 text-white">Type material</a></li>
                     <li><a id="cell_header" href="/cell/" class="nav-link px-2 text-white">Cell</a></li>
@@ -58,6 +58,7 @@
 <script>
     $("#url").on("click", function (e){
         document.getElementById("cell_header").href = document.getElementById("cell_header").href + document.getElementById("storage_header").value;
+        document.getElementById("material_header").href = document.getElementById("material_header").href + document.getElementById("storage_header").value;
     })
 
 

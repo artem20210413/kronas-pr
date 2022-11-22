@@ -32,7 +32,6 @@ class MaterialController extends Controller
 
             return (new JSONcontroller())->JSONsuccessArray('take', 'Update material', $material, 201);
         } catch (\Exception $e) {
-
             return (new JSONcontroller())->JSONerror($e->getMessage(), 501);
         }
     }

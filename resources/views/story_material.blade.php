@@ -150,7 +150,6 @@
         @endforeach
     </table>
 
-    </div>
     <?php
     //    foreach ()
     //dd(\App\Models\Decor::all())
